@@ -42,6 +42,18 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Ingredient
+  - name: "\uC870\uB9AC\uB300"
+    uniqueID: 397528599
+    locked: 0
+  - name: "\uC7AC\uB8CC\uC2E4"
+    uniqueID: 384818915
+    locked: 0
+  - name: "\uD50C\uB808\uC774\uC5B4"
+    uniqueID: 1978135477
+    locked: 0
+  - name: "\uC7AC\uB8CC"
     uniqueID: 2344103329
+    locked: 0
+  - name: "\uD584\uBC84\uAC70"
+    uniqueID: 2564223161
     locked: 0

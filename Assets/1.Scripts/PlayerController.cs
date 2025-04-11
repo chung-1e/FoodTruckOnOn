@@ -72,7 +72,15 @@ public class PlayerController : MonoBehaviour
                     heldIngredient = newIngredient;
                     isHoldingInredient = true;
 
-                    Debug.Log(station.GetIngredientName() + "을(를) 집었습니다!");
+                    Ingredient ingredient = newIngredient.GetComponent<Ingredient>();
+                    if (ingredient != null && ingredient.isSideMenu)
+                    {
+                        Debug.Log("사이드 메뉴 " + station.GetIngredientName() + "을(를) 집었습니다!");
+                    }
+                    else
+                    {
+                        Debug.Log(station.GetIngredientName() + "을(를) 집었습니다!");
+                    }
 
                     return;
                 }
@@ -97,15 +105,24 @@ public class PlayerController : MonoBehaviour
             Collider2D collider = contacts[i];
 
             CookingStation cookingStation = collider.GetComponent<CookingStation>();
+
             if (cookingStation != null)
             {
                 cookingStation.AddIngredient(heldIngredient);
 
+                Ingredient ingredient = heldIngredient.GetComponent<Ingredient>();
+                if (ingredient != null && ingredient.isSideMenu)
+                {
+                    Debug.Log("사이드 메뉴를 조리대 옆에 놓았습니다!");
+                }
+                else
+                {
+                    Debug.Log("조리대에 재료를 올렸습니다!");
+                }
+
                 heldIngredient = null;
                 isHoldingInredient = false;
                 placedSuccessfully = true;
-
-                Debug.Log("조리대에 재료를 올렸습니다.");
                 break;
             }
         }

@@ -179,8 +179,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 384818915
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: -1304077083, guid: 94caf8b6aa39a2a48b50cfbbc15419aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -224,6 +224,7 @@ MonoBehaviour:
   IngredientPrefab: {fileID: 937716097034126084, guid: 7e6f93d00035ac748aaa750b81943dbd, type: 3}
   breadBottomPrefab: {fileID: 2040866823350399296, guid: c200b4ad99115a5418bd3f9e81457e3a, type: 3}
   breadTopPrefab: {fileID: 2040866823350399296, guid: 7b7f4a8e0eea0b54c98a6af24f115471, type: 3}
+  isSideMenu: 0
 --- !u!70 &184358072
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -297,8 +298,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 384818915
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: -156352844, guid: 94caf8b6aa39a2a48b50cfbbc15419aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -342,6 +343,7 @@ MonoBehaviour:
   IngredientPrefab: {fileID: 2489171391121230746, guid: 154bd5624715e8d4cb30ee012f741882, type: 3}
   breadBottomPrefab: {fileID: 2040866823350399296, guid: c200b4ad99115a5418bd3f9e81457e3a, type: 3}
   breadTopPrefab: {fileID: 2040866823350399296, guid: 7b7f4a8e0eea0b54c98a6af24f115471, type: 3}
+  isSideMenu: 1
 --- !u!70 &379278140
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -550,8 +552,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1978135477
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -636,8 +638,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 384818915
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: 2075970090, guid: 94caf8b6aa39a2a48b50cfbbc15419aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -677,10 +679,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c90202e045d6e04aaef71ee4276a260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stationType: 5
+  stationType: 4
   IngredientPrefab: {fileID: 5963798880921239965, guid: b317b3691e0b90040b53c64a59603da6, type: 3}
   breadBottomPrefab: {fileID: 2040866823350399296, guid: c200b4ad99115a5418bd3f9e81457e3a, type: 3}
   breadTopPrefab: {fileID: 2040866823350399296, guid: 7b7f4a8e0eea0b54c98a6af24f115471, type: 3}
+  isSideMenu: 0
 --- !u!70 &838714524
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -780,8 +783,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 397528599
+  m_SortingLayer: 1
   m_SortingOrder: 0
   m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
   m_Color: {r: 0.41707066, g: 0.22392303, b: 0.46540874, a: 1}
@@ -805,7 +808,9 @@ Transform:
   m_LocalPosition: {x: 4.79, y: 3.41, z: 0}
   m_LocalScale: {x: 4, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1809837296}
+  - {fileID: 1638278444}
   m_Father: {fileID: 0}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -821,7 +826,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afd703519bb605e44b55e86ccd798fde, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stackHeight: 0.2
+  stackHeight: 0.08
+  hamburgerPrefab: {fileID: 8075893410813010272, guid: 19b21855e1cffd94fa42d57a9c0c91a8, type: 3}
+  rightSidePosition: {fileID: 1809837296}
+  leftSidePosition: {fileID: 1638278444}
 --- !u!1 &1397173927
 GameObject:
   m_ObjectHideFlags: 0
@@ -879,8 +887,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 384818915
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: -672844905, guid: 94caf8b6aa39a2a48b50cfbbc15419aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -924,6 +932,7 @@ MonoBehaviour:
   IngredientPrefab: {fileID: 2040866823350399296, guid: c200b4ad99115a5418bd3f9e81457e3a, type: 3}
   breadBottomPrefab: {fileID: 2040866823350399296, guid: c200b4ad99115a5418bd3f9e81457e3a, type: 3}
   breadTopPrefab: {fileID: 2040866823350399296, guid: 7b7f4a8e0eea0b54c98a6af24f115471, type: 3}
+  isSideMenu: 0
 --- !u!70 &1397173931
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -940,6 +949,37 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.28, y: 0.23}
   m_Direction: 0
+--- !u!1 &1638278443
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1638278444}
+  m_Layer: 0
+  m_Name: LeftSidePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1638278444
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638278443}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.4, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1109998585}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1671088779
 GameObject:
   m_ObjectHideFlags: 0
@@ -997,8 +1037,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 384818915
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: -1351739367, guid: 94caf8b6aa39a2a48b50cfbbc15419aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1042,6 +1082,7 @@ MonoBehaviour:
   IngredientPrefab: {fileID: 270734520572060094, guid: 213505ce4b3667c419c05db359c18c36, type: 3}
   breadBottomPrefab: {fileID: 2040866823350399296, guid: c200b4ad99115a5418bd3f9e81457e3a, type: 3}
   breadTopPrefab: {fileID: 2040866823350399296, guid: 7b7f4a8e0eea0b54c98a6af24f115471, type: 3}
+  isSideMenu: 0
 --- !u!70 &1671088783
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1115,8 +1156,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 384818915
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: -376176109, guid: 94caf8b6aa39a2a48b50cfbbc15419aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1156,10 +1197,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c90202e045d6e04aaef71ee4276a260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stationType: 4
+  stationType: 3
   IngredientPrefab: {fileID: 79092442796894232, guid: fd644ad5fe454494a8f9b9a63be1711a, type: 3}
   breadBottomPrefab: {fileID: 2040866823350399296, guid: c200b4ad99115a5418bd3f9e81457e3a, type: 3}
   breadTopPrefab: {fileID: 2040866823350399296, guid: 7b7f4a8e0eea0b54c98a6af24f115471, type: 3}
+  isSideMenu: 0
 --- !u!70 &1715235034
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -1176,6 +1218,37 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 0.26, y: 0.25}
   m_Direction: 0
+--- !u!1 &1809837295
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1809837296}
+  m_Layer: 0
+  m_Name: RightSidePosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1809837296
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1809837295}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.4, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1109998585}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2108906117
 GameObject:
   m_ObjectHideFlags: 0
@@ -1233,8 +1306,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 384818915
+  m_SortingLayer: 2
   m_SortingOrder: -1
   m_Sprite: {fileID: 1432892639, guid: 94caf8b6aa39a2a48b50cfbbc15419aa, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1274,10 +1347,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6c90202e045d6e04aaef71ee4276a260, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stationType: 3
+  stationType: 5
   IngredientPrefab: {fileID: 8388141873413456748, guid: 37868d74d1f0f7c4382daad62e4df8f7, type: 3}
   breadBottomPrefab: {fileID: 2040866823350399296, guid: c200b4ad99115a5418bd3f9e81457e3a, type: 3}
   breadTopPrefab: {fileID: 2040866823350399296, guid: 7b7f4a8e0eea0b54c98a6af24f115471, type: 3}
+  isSideMenu: 1
 --- !u!70 &2108906121
 CapsuleCollider2D:
   m_ObjectHideFlags: 0

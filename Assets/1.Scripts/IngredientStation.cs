@@ -6,21 +6,32 @@ public class IngredientStation : MonoBehaviour
 {
     public enum IngredientType
     {
-        Bread,              // 빵
-        Patty,               // 패티
-        Lettuce,           // 양상추
-        FrenchFries,     // 감자튀김
-        Tomato,           // 토마토
-        Cheese,            // 치즈
-        Cola                 // 콜라
+        Bread,                 // 빵
+        Patty,                   // 패티
+        Lettuce,              // 양상추
+        Tomato,               // 토마토
+        Cheese,              // 치즈
+        FrenchFries,     // 감자튀김 (사이드)
+        Cola                    // 콜라 (사이드)
     }
 
     public IngredientType stationType;
 
     public GameObject IngredientPrefab;
-
     public GameObject breadBottomPrefab;
     public GameObject breadTopPrefab;
+
+    // 플레이어가 선택한 재료가 사이드 메뉴인지의 여부
+    public bool isSideMenu = false;
+
+    void Start()
+    {
+        // 감자튀김과 콜라는 자동으로 사이드 메뉴로 설정
+        if (stationType == IngredientType.FrenchFries || stationType == IngredientType.Cola)
+        {
+            isSideMenu = true;
+        }
+    }
 
     public GameObject SpawnIngredient()
     {
@@ -56,12 +67,12 @@ public class IngredientStation : MonoBehaviour
                 return "패티";
             case IngredientType.Lettuce:
                 return "양상추";
-            case IngredientType.FrenchFries:
-                return "감자튀김";
             case IngredientType.Tomato:
                 return "토마토";
             case IngredientType.Cheese:
                 return "치즈";
+            case IngredientType.FrenchFries:
+                return "감자튀김";
             case IngredientType.Cola:
                 return "콜라";
             default:
