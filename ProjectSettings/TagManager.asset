@@ -42,10 +42,13 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: "\uC870\uB9AC\uB300"
+  - name: "\uB098\uBB34\uD310"
+    uniqueID: 1503398285
+    locked: 0
+  - name: "\uC0C1\uC790&\uC7AC\uB8CC\uC2E4"
     uniqueID: 397528599
     locked: 0
-  - name: "\uC7AC\uB8CC\uC2E4"
+  - name: "\uC870\uB9AC\uB300"
     uniqueID: 384818915
     locked: 0
   - name: "\uD50C\uB808\uC774\uC5B4"
