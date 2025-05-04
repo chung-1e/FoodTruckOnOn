@@ -11,6 +11,8 @@ public class IngredientStation : MonoBehaviour
         Lettuce,              // 양상추
         Tomato,               // 토마토
         Cheese,              // 치즈
+        Shrimp,     // 새우 (추가)
+        Chicken,    // 치킨 (추가)
         FrenchFries,     // 감자튀김 (사이드)
         Cola                    // 콜라 (사이드)
     }
@@ -71,6 +73,10 @@ public class IngredientStation : MonoBehaviour
                 return "토마토";
             case IngredientType.Cheese:
                 return "치즈";
+            case IngredientType.Shrimp:
+                return "새우";
+            case IngredientType.Chicken:
+                return "치킨";
             case IngredientType.FrenchFries:
                 return "감자튀김";
             case IngredientType.Cola:

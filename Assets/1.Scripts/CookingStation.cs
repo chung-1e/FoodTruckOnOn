@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class CookingStation : MonoBehaviour
 {
+    //RecipeManager에서 접근 가능하도록
     // 햄버거 재료들
-    private List<GameObject> placedIngredients = new List<GameObject>();
+    public List<GameObject> placedIngredients = new List<GameObject>();
 
-    private Dictionary<IngredientStation.IngredientType, GameObject> sideMenus
+    public Dictionary<IngredientStation.IngredientType, GameObject> sideMenus
         = new Dictionary<IngredientStation.IngredientType, GameObject>();
 
     public float stackHeight = 0.2f;
@@ -17,6 +18,9 @@ public class CookingStation : MonoBehaviour
     // 사이드 메뉴가 놓일 위치
     public Transform rightSidePosition;
     public Transform leftSidePosition;
+
+    [Header("레시피 시스템")]
+    public RecipeManager recipeManager; // 레시피 매니저 참조
 
     public bool HasAnyIngredients()
     {
@@ -152,8 +156,15 @@ public class CookingStation : MonoBehaviour
         // 햄버거 완성 시 콘솔창에 안내
         Debug.Log("햄버거가 완성되었습니다!");
 
-        // 주문 완료 상태 확인
-        CheckOrderStatus();
+        // 레시피 검증
+        if (recipeManager != null)
+        {
+            recipeManager.CheckRecipeComplettion();
+        }
+        else
+        {
+            Debug.LogWarning("RecipeManager가 할당되지 않았습니다!");
+        }
 
         // 기존 재료 모두 제거
         ClearBurgerIngredients();
@@ -219,11 +230,10 @@ public class CookingStation : MonoBehaviour
     // 조리대에 있는 모든 음식 제거 (완성된 햄버거, 사이드 메뉴)
     public void ClearAllFoods()
     {
-        // 햄버거 제거
-        Destroy(hamburgerPrefab);
+        ClearBurgerIngredients();
 
         // 사이드 메뉴 제거
-        foreach(var sideMenu in sideMenus.Values)
+        foreach (var sideMenu in sideMenus.Values)
         {
             Destroy(sideMenu);
         }
