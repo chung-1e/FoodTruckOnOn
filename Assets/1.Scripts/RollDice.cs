@@ -6,26 +6,26 @@ using UnityEngine.UI;
 public class RollDice : MonoBehaviour
 {
     [Header("주사위 이미지 설정")]
-    public Image diceImage; // 주사위 이미지를 표시할때 Image 컴포넌트
-    public Sprite[] diceSprites;    // 1~6까지의 주사위 스프라이트 배열
+    public Image diceImage;  // 주사위 이미지를 표시할 Image 컴포넌트
+    public Sprite[] diceSprites;  // 1~6까지의 주사위 스프라이트 배열
 
     [Header("롤링 설정")]
-    public Button rollButton;   // 주사위를 굴림 버튼
-    public float rollingDuration = 0.5f;    // 굴러가는 시간
-    public float swapInterval = 0.5f;   // 이미지 스왑 간격
+    public Button rollButton;  // 주사위를 굴릴 버튼
+    public float rollingDuration = 0.5f;  // 굴러가는 시간
+    public float swapInterval = 0.05f;  // 이미지 스왑 간격
 
     [Header("레시피 시스템")]
-    public RecipeManager recipeManager; // 레시피 매니저 참조
+    public RecipeManager recipeManager;  // 레시피 매니저 참조
 
-    [Header("레시피 시스템")]
-    public Vector2 dicePos; //주사위가 이동할때 목표 위치
-    public float shrinkDuration = 0.5f; //크기 속도 및 이동 시간
+    [Header("애니메이션 설정")]
+    public Vector2 dicePos;  // 주사위가 이동할 최종 위치
+    public float shrinkDuration = 0.5f;  // 크기 축소 및 이동 시간
 
-    private bool isRolling = false; //현재 주사위가 굴러가고 있는지 확인
-    private RectTransform diceRectTransform;    // 주사위의 RectTransform
+    private bool isRolling = false;  // 현재 주사위가 굴러가고 있는지 확인
+    private RectTransform diceRectTransform;  // 주사위의 RectTransform
 
-    private Vector2 originalSize = new Vector2(450, 450); // 원래 크기
-    private Vector2 reducedSize = new Vector2(112.5f, 112.5f);  // 축소된 크기
+    private Vector2 originalSize = new Vector2(450, 450);  // 큰 크기
+    private Vector2 reducedSize = new Vector2(112.5f, 112.5f);  // 작은 크기
 
     void Start()
     {
@@ -38,13 +38,12 @@ public class RollDice : MonoBehaviour
             rollButton.onClick.AddListener(Rolling);
         }
 
-        // 시작 시 주사위 초기화
+        // 시작 시 주사위 초기화 - (0,0) 위치에 큰 크기로 배치
         if (diceImage != null && diceSprites.Length > 0)
         {
             diceImage.sprite = diceSprites[0];
-            // 초기 위치와 크기 설정
             diceRectTransform.anchoredPosition = Vector2.zero;
-            diceRectTransform.sizeDelta = reducedSize;
+            diceRectTransform.sizeDelta = originalSize;
         }
     }
 
@@ -57,7 +56,6 @@ public class RollDice : MonoBehaviour
         StartCoroutine(RollDiceCoroutine());
     }
 
-
     IEnumerator RollDiceCoroutine()
     {
         isRolling = true;
@@ -68,19 +66,19 @@ public class RollDice : MonoBehaviour
             rollButton.interactable = false;
         }
 
-        // 주사위를 (0,0) 위치로 이동하고 450x450으로 크기 변경
+        // 주사위를 (0,0) 위치와 큰 크기로 유지 (시작 위치)
         diceRectTransform.anchoredPosition = Vector2.zero;
-        diceRectTransform.sizeDelta = reducedSize;
+        diceRectTransform.sizeDelta = originalSize;
 
         // 굴러가는 효과
-        float elepsedTime = 0f;
-        while (elepsedTime < rollingDuration)
+        float elapsedTime = 0f;
+        while (elapsedTime < rollingDuration)
         {
-            //랜덤하게 주사위 이미지 변경
+            // 랜덤하게 주사위 이미지 변경
             int randomIndex = Random.Range(0, diceSprites.Length);
             diceImage.sprite = diceSprites[randomIndex];
 
-            elepsedTime += swapInterval;
+            elapsedTime += swapInterval;
             yield return new WaitForSeconds(swapInterval);
         }
 
@@ -98,11 +96,11 @@ public class RollDice : MonoBehaviour
             recipeManager.GenerateRecipe(diceNumber);
         }
 
-        //크기를 줄이면서 dicePos로 이동하는 코루틴 시작
+        // 크기를 줄이면서 dicePos로 이동하는 코루틴 시작
         yield return StartCoroutine(ShrinkAndMoveToDicePos());
 
-        //버튼 다시 활성화
-        if (rollButton !=null)
+        // 버튼 다시 활성화
+        if (rollButton != null)
         {
             rollButton.interactable = true;
         }
