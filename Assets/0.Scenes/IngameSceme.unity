@@ -653,7 +653,7 @@ MonoBehaviour:
   swapInterval: 0.08
   recipeManager: {fileID: 1806285201}
   dicePos: {x: -804.9657, y: 463.347}
-  shrinkDuration: 0.5
+  shrinkDuration: 1
 --- !u!1 &185264915
 GameObject:
   m_ObjectHideFlags: 0
