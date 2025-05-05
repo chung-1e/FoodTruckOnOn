@@ -77,6 +77,12 @@ public class RollDice : MonoBehaviour
         diceRectTransform.anchoredPosition = Vector2.zero;
         diceRectTransform.sizeDelta = originalSize;
 
+        // 레시피 생성
+        if (recipeManager != null)
+        {
+            recipeManager.OnNewRecipeGenerated();
+        }
+
         // 굴러가는 효과
         float elapsedTime = 0f;
         while (elapsedTime < rollingDuration)
@@ -98,10 +104,10 @@ public class RollDice : MonoBehaviour
         int diceNumber = finalResult + 1;
         Debug.Log($"주사위 결과: {diceNumber}");
 
-        // 레시피 생성
+        //레시피 생성이 더 일찍 호출됨
         if (recipeManager != null)
         {
-            recipeManager.OnNewRecipeGenerated();
+            recipeManager.GenerateRecipe(diceNumber);
         }
 
         // 크기를 줄이면서 dicePos로 이동하는 코루틴 시작

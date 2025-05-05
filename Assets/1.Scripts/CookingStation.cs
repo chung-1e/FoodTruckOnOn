@@ -96,6 +96,12 @@ public class CookingStation : MonoBehaviour
             sideMenus[type] = sideMenu;
 
             Debug.Log(type + "사이드 메뉴가 조리대 옆에 배치되었습니다.");
+
+            // 사이드 메뉴가 추가되었을 때도 레시피 체크
+            if (recipeManager != null)
+            {
+                recipeManager.CheckIngredientOrder();
+            }
         }
         else
         {
@@ -103,106 +109,7 @@ public class CookingStation : MonoBehaviour
             Destroy(sideMenu);
         }
     }
-
-    private void CheckBurgerCompletion()    // 햄버거 완성 여부 메서드
-    {
-        //아래 빵이 조리대에 없다 (기본값)
-        bool hasBreadBottom = false;
-
-        //위 빵이 조리대에 없다 (기본값)
-        bool hasBreadTop = false;
-
-
-        // 모든 재료를 검사하여 아래 빵과 위 빵이 있는지 확인
-        foreach (GameObject ingredient in placedIngredients)
-        {
-            Ingredient ingredientComponenet = ingredient.GetComponent<Ingredient>();
-
-            if (ingredientComponenet != null)
-            {
-                // 재료 이름으로 빵 종류 확인
-                if (ingredient.name.Contains("아래 빵") || ingredient.name == "bread_bottom")
-                {
-                    hasBreadBottom = true;
-                }
-                else if (ingredient.name.Contains("위 빵") || ingredient.name == "bread_top")
-                {
-                    hasBreadTop = true;
-                }
-            }
-        }
-
-        // 양쪽 빵이 모두 있으면 햄버거 완성
-        if (hasBreadBottom && hasBreadTop)
-        {
-            CompleteBuger();
-        }
-    }
-
-    private void CompleteBuger()
-    {
-        // 햄버거 프리팹이 할당되어 있는가
-        if (hamburgerPrefab == null)
-        {
-            Debug.LogWarning("햄버거 프리팹이 할당되지 않았습니다!");
-            return;
-        }
-
-        // 햄버거 생성 위치
-        Vector3 bugerPosition = transform.position + Vector3.up * 0.3f; // <- 조리대 위
-
-        // 햄버거 프리팹 생성
-        GameObject burger = Instantiate(hamburgerPrefab, bugerPosition, Quaternion.identity);
-
-        // 햄버거 이름 설정 (생성될 햄버거 프리팹의 이름을 설정하는 용도)
-        burger.name = "완성된 햄버거";
-
-        // 햄버거 완성 시 콘솔창에 안내
-        Debug.Log("햄버거가 완성되었습니다!");
-
-        // 레시피 검증
-        if (recipeManager != null)
-        {
-            recipeManager.CheckRecipeCompletion();
-        }
-        else
-        {
-            Debug.LogWarning("RecipeManager가 할당되지 않았습니다!");
-        }
-
-        // 기존 재료 모두 제거
-        ClearBurgerIngredients();
-    }
-
-    // 주문 완료 상태 확인
-    private void CheckOrderStatus()
-    {
-        bool hasFrenchFries = sideMenus.ContainsKey(IngredientStation.IngredientType.FrenchFries);
-        bool hasCola = sideMenus.ContainsKey(IngredientStation.IngredientType.Cola);
-
-        string orderStatus = "주문 상태 : 햄버거(완성)";
-
-        if (hasFrenchFries)
-        {
-            orderStatus += ", 감자튀김(준비됨)";
-        }
-        else
-        {
-            orderStatus += ", 콜라(준비 안 됨)";
-        }
-        
-        if (hasCola)
-        {
-            orderStatus += ", 콜라(준비됨)";
-        }
-        else
-        {
-            orderStatus += ", 콜라(준비 안 됨)";
-        }
-
-        Debug.Log(orderStatus);
-    }
-
+    
     private void StackIngredients()
     {
         Vector3 basePosition = transform.position;

@@ -17,6 +17,9 @@ public class RecipeManager : MonoBehaviour
     [Header("완성 햄버거 설정")]
     public float burgerDisplayDuration = 2f;    // 완성 햄버거 표시 시간
 
+    [Header("피버 시스템")]
+    public FeverSystem feverSystem; // 피버 시스템 참조
+
     // 현재 레시피
     private List<string> currentRecipe = new List<string>();
     private int requiredMainIngredients = 0;    // 메인 재료의 개수
@@ -129,6 +132,7 @@ public class RecipeManager : MonoBehaviour
 
         Debug.Log("현재 올린 재료: " + string.Join(", ", currentIngredients));
         Debug.Log("레시피 순서: " + string.Join(", ", currentRecipe));
+        Debug.Log($"현재 개수: {currentIngredients.Count}, 레시피 개수: {currentRecipe.Count}");
 
         // 현재까지 올린 재료가 레시피 순서와 맞는지 확인
         for (int i = 0; i < currentIngredients.Count; i++)
@@ -137,6 +141,13 @@ public class RecipeManager : MonoBehaviour
             if (i >= currentRecipe.Count || currentIngredients[i] != currentRecipe[i])
             {
                 Debug.Log($"잘못된 순서! 위치 {i}: 예상 '{(i < currentRecipe.Count ? currentRecipe[i] : "없음")}' 실제 '{currentIngredients[i]}'");
+
+                // 피버 시스템에 실패 알림
+                if (feverSystem != null)
+                {
+                    feverSystem.OnBurgerFailed();
+                }
+
                 cookingStation.ClearAllFoods();
                 return;
             }
@@ -154,16 +165,29 @@ public class RecipeManager : MonoBehaviour
     {
         // 현재 조리대에 있는 모든 재료 가져오기
         List<string> placedItems = GetPlacedItemsInOrder();
+        Debug.Log($"현재 배치된 아이템들: {string.Join(", ", placedItems)}");
 
         //레시피와 비교
         if (IsRecipeCorrect(placedItems))
         {
             Debug.Log("완벽합니다!");
-            // 여기에 성공 처리 코드 추가 가능
+
+            if (feverSystem != null)
+            {
+                feverSystem.OnBurgerCompleted();
+            }
+
+            CreateCompletedBurger();
         }
         else
         {
             Debug.Log("잘못 만들었습니다.");
+
+            if (feverSystem != null)
+            {
+                feverSystem.OnBurgerFailed();
+            }
+
             cookingStation.ClearAllFoods();
         }
     }
@@ -172,14 +196,13 @@ public class RecipeManager : MonoBehaviour
     {
         List<string> placedItems = new List<string>();
 
-        //CookingStation에서 재료 순서 가져오기
+        // 1. 햄버거 재료들 (아래 빵부터 위 빵까지 순서대로)
         foreach (GameObject ingredient in cookingStation.placedIngredients)
         {
             if (ingredient != null)
             {
                 string name = ingredient.name;
 
-                // "아래 빵"과 "위 빵"을 정확히 구분
                 if (name.Contains("아래 빵") || name == "bread_bottom")
                 {
                     placedItems.Add("아래 빵");
@@ -190,7 +213,6 @@ public class RecipeManager : MonoBehaviour
                 }
                 else
                 {
-                    // 기타 재료들
                     Ingredient ingredientComponent = ingredient.GetComponent<Ingredient>();
                     if (ingredientComponent != null && ingredientNames.ContainsKey(ingredientComponent.type))
                     {
@@ -200,7 +222,7 @@ public class RecipeManager : MonoBehaviour
             }
         }
 
-        // 사이드 메뉴 확인
+        // 2. 사이드 메뉴들 (레시피 순서와 상관없이 있으면 추가)
         if (cookingStation.sideMenus.ContainsKey(IngredientStation.IngredientType.FrenchFries))
         {
             placedItems.Add("감자튀김");
@@ -211,24 +233,22 @@ public class RecipeManager : MonoBehaviour
             placedItems.Add("콜라");
         }
 
+        // 디버깅용 로그
+        Debug.Log("최종 배치된 아이템들: " + string.Join(", ", placedItems));
+        Debug.Log("현재 레시피: " + string.Join(", ", currentRecipe));
+
         return placedItems;
     }
 
     bool IsRecipeCorrect(List<string> placedItems)
     {
         // 길이가 다르면 실패
-        if (placedItems.Count != currentRecipe.Count)
-        {
-            return false;
-        }
+        if (placedItems.Count != currentRecipe.Count) return false;
 
         // 각 항목이 순서대로 정확한지 확인
         for (int i = 0; i < currentRecipe.Count; i++)
         {
-            if (placedItems[i] != currentRecipe[i])
-            {
-                return false;
-            }
+            if (placedItems[i] != currentRecipe[i]) return true;
         }
 
         return true;
@@ -245,6 +265,9 @@ public class RecipeManager : MonoBehaviour
         completedBurger.name = "완성된 햄버거";
 
         isBurgerCompleted = true;
+
+        Debug.Log("TriggerNextDice 코루틴 시작");
+        StartCoroutine(TriggerNextDice());
     }
 
     public void OnNewRecipeGenerated()
@@ -271,14 +294,14 @@ public class RecipeManager : MonoBehaviour
                 string name = ingredient.name;
 
                 if (name.Contains("아래 빵") || name == "bread_bottom")
-                {
+            {
                     currentIngredients.Add("아래 빵");
                 }
-                else if (name.Contains("위 빵") || name == "bread_top")
-                {
+            else if (name.Contains("위 빵") || name == "bread_top")
+            {
                     currentIngredients.Add("위 빵");
                 }
-                else
+            else
                 {
                     Ingredient ingredientComponent = ingredient.GetComponent<Ingredient>();
                     if (ingredientComponent != null && ingredientNames.ContainsKey(ingredientComponent.type))
@@ -289,6 +312,36 @@ public class RecipeManager : MonoBehaviour
             }
         }
 
+        // 사이드 메뉴도 확인
+        if (cookingStation.sideMenus.ContainsKey(IngredientStation.IngredientType.FrenchFries))
+        {
+            currentIngredients.Add("감자튀김");
+        }
+
+        if (cookingStation.sideMenus.ContainsKey(IngredientStation.IngredientType.Cola))
+        {
+            currentIngredients.Add("콜라");
+        }
+
         return currentIngredients;
+    }
+
+    // 자동으로 다음 주사위 굴림
+    IEnumerator TriggerNextDice()
+    {
+        Debug.Log($"TriggerNextDice 시작 - 현재 Time.timeScale: {Time.timeScale}");
+
+        yield return new WaitForSecondsRealtime(burgerDisplayDuration);
+
+        Debug.Log("TriggerNextDice = 주사위 굴리기 시작");
+
+        if (diceRoller != null)
+        {
+            diceRoller.Rolling();
+        }
+        else
+        {
+            Debug.Log("diceRoller가 null입니다!");
+        }
     }
 }

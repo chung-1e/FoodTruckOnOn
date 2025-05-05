@@ -369,8 +369,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 101541686}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.03, y: -2.6201, z: 0}
-  m_LocalScale: {x: 2.2716813, y: 2.183987, z: 1}
+  m_LocalPosition: {x: 0.0389, y: -2.6201, z: 0}
+  m_LocalScale: {x: 2.2973511, y: 2.183987, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1241125705}
@@ -654,8 +654,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 178510502}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.2176, y: -2.6201, z: 0}
-  m_LocalScale: {x: 2.2716813, y: 2.183987, z: 1}
+  m_LocalPosition: {x: -3.2134, y: -2.6201, z: 0}
+  m_LocalScale: {x: 2.3111782, y: 2.183987, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1241125705}
@@ -1159,8 +1159,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 452341914}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.58, y: -2.6201, z: 0}
-  m_LocalScale: {x: 2.2716813, y: 2.183987, z: 1}
+  m_LocalPosition: {x: -1.5851, y: -2.6201, z: 0}
+  m_LocalScale: {x: 2.3082135, y: 2.183987, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1241125705}
@@ -1538,8 +1538,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 575581195}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.67, y: -2.6201, z: 0}
-  m_LocalScale: {x: 2.2716813, y: 2.183987, z: 1}
+  m_LocalPosition: {x: 1.6656, y: -2.6201, z: 0}
+  m_LocalScale: {x: 2.3359468, y: 2.183987, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1241125705}
@@ -2568,6 +2568,7 @@ GameObject:
   - component: {fileID: 1498012823}
   - component: {fileID: 1498012825}
   - component: {fileID: 1498012824}
+  - component: {fileID: 1498012826}
   m_Layer: 5
   m_Name: combo_gauge
   m_TagString: Untagged
@@ -2638,6 +2639,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1498012822}
   m_CullTransparentMesh: 1
+--- !u!114 &1498012826
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1498012822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 85616dd3e94d62b468ff765024dbb1a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  frameImage: {fileID: 1498012824}
+  streakImages:
+  - {fileID: 1849162964}
+  - {fileID: 1571345828}
+  - {fileID: 765582}
+  - {fileID: 2088276099}
+  - {fileID: 762852018}
+  feverPanel: {fileID: 2095708350}
+  grayscaleSprites:
+  - {fileID: 113106062, guid: 4cde202d1b4723e4fa1152c94e1cd2e1, type: 3}
+  - {fileID: 1730648620, guid: 4cde202d1b4723e4fa1152c94e1cd2e1, type: 3}
+  - {fileID: -2030782270, guid: 4cde202d1b4723e4fa1152c94e1cd2e1, type: 3}
+  - {fileID: 1148210439, guid: 4cde202d1b4723e4fa1152c94e1cd2e1, type: 3}
+  - {fileID: 1865080467, guid: 4cde202d1b4723e4fa1152c94e1cd2e1, type: 3}
+  colorSprites:
+  - {fileID: 968906451, guid: 204a3e2380ecb5040ad84c6bcb041bb7, type: 3}
+  - {fileID: 2061168842, guid: 204a3e2380ecb5040ad84c6bcb041bb7, type: 3}
+  - {fileID: -1288845844, guid: 204a3e2380ecb5040ad84c6bcb041bb7, type: 3}
+  - {fileID: -111579826, guid: 204a3e2380ecb5040ad84c6bcb041bb7, type: 3}
+  - {fileID: 1125805746, guid: 204a3e2380ecb5040ad84c6bcb041bb7, type: 3}
+  feverDuration: 10
 --- !u!1 &1571345826
 GameObject:
   m_ObjectHideFlags: 0
@@ -2847,7 +2881,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 397528599
   m_SortingLayer: 4
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Sprite: {fileID: -1820998143, guid: d57f44c85ede3d8438905ec769ab5a58, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -3324,7 +3358,8 @@ MonoBehaviour:
   recipeDisplay: {fileID: 147685993}
   diceRoller: {fileID: 182315805}
   cookingStation: {fileID: 681203958}
-  burgerDisplayDuration: 2
+  burgerDisplayDuration: 1
+  feverSystem: {fileID: 1498012826}
 --- !u!4 &1806285202
 Transform:
   m_ObjectHideFlags: 0
@@ -3607,8 +3642,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1859930457}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.29, y: -2.6201, z: 0}
-  m_LocalScale: {x: 2.2716813, y: 2.183987, z: 1}
+  m_LocalPosition: {x: 3.2989, y: -2.6201, z: 0}
+  m_LocalScale: {x: 2.2973511, y: 2.183987, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1241125705}
@@ -4127,7 +4162,7 @@ GameObject:
   - component: {fileID: 2095708353}
   - component: {fileID: 2095708352}
   m_Layer: 5
-  m_Name: fever
+  m_Name: feverPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
