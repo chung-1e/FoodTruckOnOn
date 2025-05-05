@@ -17,6 +17,11 @@ public class PlayerController : MonoBehaviour
     private bool isMoving = false;
     private Vector2 lastDirection = Vector2.down;
 
+    // 재료 잡기 설정
+    [Header("재료 잡기 설정")]
+    public float ingredientHoldHeight = 0.5f; // 재료를 들 때 플레이어 위의 높이
+    public Vector3 ingredientHoldOffset = Vector3.zero; // 추가적인 오프셋
+
     private const string w_idle = "w_idle";
     private const string ad_idle = "ad_idle";
     private const string s_idle = "s_idle";
@@ -59,13 +64,14 @@ public class PlayerController : MonoBehaviour
         float moveX = 0f;
         float moveY = 0f;
 
-        if (Input.GetKey(KeyCode.W))
+        // 방향키로 변경
+        if (Input.GetKey(KeyCode.UpArrow))
         { moveY = 1f; }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.DownArrow))
         { moveY = -1f; }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.LeftArrow))
         { moveX = -1f; }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.RightArrow))
         { moveX = 1f; }
 
         Vector2 movement = new Vector2(moveX, moveY).normalized * moveSpeed;
@@ -88,7 +94,9 @@ public class PlayerController : MonoBehaviour
 
         if (isHoldingInredient && heldIngredient != null)
         {
-            heldIngredient.transform.position = transform.position + new Vector3(0, 0.5f, 0);   // 재료를 잡고 있으면 플레이어보다 약간 위에 있다
+            // 재료 위치 수정: 높이와 오프셋 적용
+            heldIngredient.transform.position = transform.position +
+                Vector3.up * ingredientHoldHeight + ingredientHoldOffset;
         }
     }
 
@@ -112,6 +120,17 @@ public class PlayerController : MonoBehaviour
                 {
                     heldIngredient = newIngredient;
                     isHoldingInredient = true;
+
+                    // 디버깅: 현재 설정 값 확인
+                    Debug.Log($"현재 ingredientHoldHeight: {ingredientHoldHeight}");
+                    Debug.Log($"현재 ingredientHoldOffset: {ingredientHoldOffset}");
+
+                    // 재료를 잡은 즉시 위치 설정
+                    Vector3 targetPosition = transform.position +
+                        Vector3.up * ingredientHoldHeight + ingredientHoldOffset;
+
+                    Debug.Log($"재료 위치 설정: {targetPosition}");
+                    newIngredient.transform.position = targetPosition;
 
                     Ingredient ingredient = newIngredient.GetComponent<Ingredient>();
                     if (ingredient != null && ingredient.isSideMenu)

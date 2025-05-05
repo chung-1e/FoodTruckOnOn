@@ -48,11 +48,11 @@ TagManager:
   - name: "\uC870\uB9AC\uB300"
     uniqueID: 384818915
     locked: 0
-  - name: "\uC0C1\uC790&\uC7AC\uB8CC\uC2E4"
-    uniqueID: 397528599
-    locked: 0
   - name: "\uD50C\uB808\uC774\uC5B4&\uC7AC\uB8CC"
     uniqueID: 1978135477
+    locked: 0
+  - name: "\uC0C1\uC790&\uC7AC\uB8CC\uC2E4"
+    uniqueID: 397528599
     locked: 0
   - name: "\uD584\uBC84\uAC70"
     uniqueID: 2564223161

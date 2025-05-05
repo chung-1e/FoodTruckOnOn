@@ -45,13 +45,17 @@ public class CookingStation : MonoBehaviour
         {
             // 햄버거 재료 추가
             placedIngredients.Add(ingredient);
+            Debug.Log($"재료 추가: {ingredient.name}, 현재 재료 개수: {placedIngredients.Count}");
 
             ingredient.transform.SetParent(transform);
 
             StackIngredients();
 
-            // 햄버거 완성 여부 확인
-            CheckBurgerCompletion();
+            // 순서 확인 (사이드 메뉴가 아닌 경우만)
+            if (recipeManager != null)
+            {
+                recipeManager.CheckIngredientOrder();
+            }
         }
     }
 
@@ -159,7 +163,7 @@ public class CookingStation : MonoBehaviour
         // 레시피 검증
         if (recipeManager != null)
         {
-            recipeManager.CheckRecipeComplettion();
+            recipeManager.CheckRecipeCompletion();
         }
         else
         {

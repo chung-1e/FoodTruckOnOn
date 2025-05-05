@@ -8,13 +8,16 @@ public class RecipeManager : MonoBehaviour
     [Header("UI 요소")]
     public Text recipeDisplay; // 레시피를 표시할 Text 컴포넌트
 
-    [Header("주사위 캄포넌트")]
+    [Header("주사위")]
     public RollDice diceRoller; // 주사위 굴리기 컴포넌트
 
-    [Header("기타 컴포넌트")]
-    public CookingStation cookingStation;   //조리대 참조
+    [Header("조리대")]
+    public CookingStation cookingStation;   // 조리대 참조
 
-    //현재 레시피
+    [Header("완성 햄버거 설정")]
+    public float burgerDisplayDuration = 2f;    // 완성 햄버거 표시 시간
+
+    // 현재 레시피
     private List<string> currentRecipe = new List<string>();
     private int requiredMainIngredients = 0;    // 메인 재료의 개수
     private bool requiresFrenchFries = false;
@@ -22,6 +25,10 @@ public class RecipeManager : MonoBehaviour
 
     // 재료 타입과 이름 매핑
     private Dictionary<IngredientStation.IngredientType, string> ingredientNames;
+
+    //햄버거 완성 상태
+    private bool isBurgerCompleted = false;
+    private GameObject completedBurger = null;
 
     void Start()
     {
@@ -116,7 +123,34 @@ public class RecipeManager : MonoBehaviour
         recipeDisplay.text = recipeText;
     }
 
-    public void CheckRecipeComplettion()
+    public void CheckIngredientOrder()
+    {
+        List<string> currentIngredients = GetCurrentIngredientsInOrder();
+
+        Debug.Log("현재 올린 재료: " + string.Join(", ", currentIngredients));
+        Debug.Log("레시피 순서: " + string.Join(", ", currentRecipe));
+
+        // 현재까지 올린 재료가 레시피 순서와 맞는지 확인
+        for (int i = 0; i < currentIngredients.Count; i++)
+        {
+            // 레시피 범위를 벗어나거나 순서가 틀린 경우
+            if (i >= currentRecipe.Count || currentIngredients[i] != currentRecipe[i])
+            {
+                Debug.Log($"잘못된 순서! 위치 {i}: 예상 '{(i < currentRecipe.Count ? currentRecipe[i] : "없음")}' 실제 '{currentIngredients[i]}'");
+                cookingStation.ClearAllFoods();
+                return;
+            }
+        }
+
+        // 모든 재료가 레시피대로 올라갔는지 확인
+        if (currentIngredients.Count == currentRecipe.Count)
+        {
+            Debug.Log("모든 재료가 올바른 순서로 올라갔습니다!");
+            CheckRecipeCompletion();
+        }
+    }
+
+    public void CheckRecipeCompletion()
     {
         // 현재 조리대에 있는 모든 재료 가져오기
         List<string> placedItems = GetPlacedItemsInOrder();
@@ -146,11 +180,15 @@ public class RecipeManager : MonoBehaviour
                 string name = ingredient.name;
 
                 // "아래 빵"과 "위 빵"을 정확히 구분
-                if (name.Contains("아래 빵") || name == "bottom_Bread")
+                if (name.Contains("아래 빵") || name == "bread_bottom")
                 {
                     placedItems.Add("아래 빵");
                 }
-                else if (name.Contains("위 빵") || name == "top_Bread")
+                else if (name.Contains("위 빵") || name == "bread_top")
+                {
+                    placedItems.Add("위 빵");
+                }
+                else
                 {
                     // 기타 재료들
                     Ingredient ingredientComponent = ingredient.GetComponent<Ingredient>();
@@ -195,9 +233,61 @@ public class RecipeManager : MonoBehaviour
 
         return true;
     }
+
+    private void CreateCompletedBurger()
+    {
+        // 조리대 위 모든 재료 제거
+        cookingStation.ClearAllFoods();
+
+        // 햄버거 프리팹 생성
+        Vector3 burgerPosition = cookingStation.transform.position + Vector3.up * 0.3f;
+        completedBurger = Instantiate(cookingStation.hamburgerPrefab, burgerPosition, Quaternion.identity);
+        completedBurger.name = "완성된 햄버거";
+
+        isBurgerCompleted = true;
+    }
+
+    public void OnNewRecipeGenerated()
+    {
+        // 새로운 레시피가 생성될 때 이전 햄버거 제거
+        if (completedBurger != null)
+        {
+            Destroy(completedBurger);
+            completedBurger = null;
+            isBurgerCompleted = false;
+        }
+    }
+
+    private List<string> GetCurrentIngredientsInOrder()
+    {
+        List<string> currentIngredients = new List<string>();
+
+        // 현재 조리대에 올라가 있는 햄버거 재료만 가져오기
+        foreach (GameObject ingredient in cookingStation.placedIngredients)
+        {
+            if (ingredient != null)
+            {
+                string name = ingredient.name;
+
+                if (name.Contains("아래 빵") || name == "bread_bottom")
+                {
+                    currentIngredients.Add("아래 빵");
+                }
+                else if (name.Contains("위 빵") || name == "bread_top")
+                {
+                    currentIngredients.Add("위 빵");
+                }
+                else
+                {
+                    Ingredient ingredientComponent = ingredient.GetComponent<Ingredient>();
+                    if (ingredientComponent != null && ingredientNames.ContainsKey(ingredientComponent.type))
+                    {
+                        currentIngredients.Add(ingredientNames[ingredientComponent.type]);
+                    }
+                }
+            }
+        }
+
+        return currentIngredients;
+    }
 }
-            
-        
-    
-
-

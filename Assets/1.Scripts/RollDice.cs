@@ -21,9 +21,11 @@ public class RollDice : MonoBehaviour
     public Vector2 dicePos;  // 주사위가 이동할 최종 위치
     public float shrinkDuration = 0.5f;  // 크기 축소 및 이동 시간
 
+    [Header("시간 제어")]
+    public GameObject blackPanel;  // 블랙 패널 GameObject
+
     private bool isRolling = false;  // 현재 주사위가 굴러가고 있는지 확인
     private RectTransform diceRectTransform;  // 주사위의 RectTransform
-
     private Vector2 originalSize = new Vector2(450, 450);  // 큰 크기
     private Vector2 reducedSize = new Vector2(112.5f, 112.5f);  // 작은 크기
 
@@ -45,6 +47,12 @@ public class RollDice : MonoBehaviour
             diceRectTransform.anchoredPosition = Vector2.zero;
             diceRectTransform.sizeDelta = originalSize;
         }
+
+        // 시작 시 블랙 패널 비활성화
+        if (blackPanel != null)
+        {
+            blackPanel.SetActive(false);
+        }
     }
 
     public void Rolling()
@@ -59,6 +67,15 @@ public class RollDice : MonoBehaviour
     IEnumerator RollDiceCoroutine()
     {
         isRolling = true;
+
+        // 블랙 패널 활성화
+        if (blackPanel != null)
+        {
+            blackPanel.SetActive(true);
+        }
+
+        // 시간 정지 (주사위 제외)
+        Time.timeScale = 0f;
 
         // 버튼 비활성화 (연속 클릭 방지)
         if (rollButton != null)
@@ -77,9 +94,10 @@ public class RollDice : MonoBehaviour
             // 랜덤하게 주사위 이미지 변경
             int randomIndex = Random.Range(0, diceSprites.Length);
             diceImage.sprite = diceSprites[randomIndex];
-
             elapsedTime += swapInterval;
-            yield return new WaitForSeconds(swapInterval);
+
+            // 실제 시간 사용 (Time.timeScale = 0이어도 작동)
+            yield return new WaitForSecondsRealtime(swapInterval);
         }
 
         // 최종 랜덤 결과 표시
@@ -99,6 +117,15 @@ public class RollDice : MonoBehaviour
         // 크기를 줄이면서 dicePos로 이동하는 코루틴 시작
         yield return StartCoroutine(ShrinkAndMoveToDicePos());
 
+        // 주사위 이동이 끝나면 시간 정상화
+        Time.timeScale = 1f;
+
+        // 블랙 패널 비활성화
+        if (blackPanel != null)
+        {
+            blackPanel.SetActive(false);
+        }
+
         // 버튼 다시 활성화
         if (rollButton != null)
         {
@@ -117,15 +144,14 @@ public class RollDice : MonoBehaviour
         while (elapsedTime < shrinkDuration)
         {
             float t = elapsedTime / shrinkDuration;
-
             // EaseOut 효과를 위한 보간 (더 자연스러운 움직임)
             float smoothT = 1 - Mathf.Pow(1 - t, 2);
 
-            // 위치와 크기를 점진적으로 변경
+            // 위치와 크기를 점진적으로 변경 (실제 시간 사용)
             diceRectTransform.anchoredPosition = Vector2.Lerp(startPosition, dicePos, smoothT);
             diceRectTransform.sizeDelta = Vector2.Lerp(startSize, reducedSize, smoothT);
 
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.unscaledDeltaTime;  // 시간 정지 상태에서도 작동
             yield return null;
         }
 
