@@ -10,7 +10,6 @@ public class RollDice : MonoBehaviour
     public Sprite[] diceSprites;  // 1~6까지의 주사위 스프라이트 배열
 
     [Header("롤링 설정")]
-    public Button rollButton;  // 주사위를 굴릴 버튼
     public float rollingDuration = 0.5f;  // 굴러가는 시간
     public float swapInterval = 0.05f;  // 이미지 스왑 간격
 
@@ -34,12 +33,6 @@ public class RollDice : MonoBehaviour
         // 컴포넌트 참조
         diceRectTransform = diceImage.GetComponent<RectTransform>();
 
-        // 버튼 클릭 이벤트 연결
-        if (rollButton != null)
-        {
-            rollButton.onClick.AddListener(Rolling);
-        }
-
         // 시작 시 주사위 초기화 - (0,0) 위치에 큰 크기로 배치
         if (diceImage != null && diceSprites.Length > 0)
         {
@@ -53,6 +46,9 @@ public class RollDice : MonoBehaviour
         {
             blackPanel.SetActive(false);
         }
+
+        // 게임 시작 시 첫 번째 주사위 굴리기
+        Rolling();
     }
 
     public void Rolling()
@@ -76,12 +72,6 @@ public class RollDice : MonoBehaviour
 
         // 시간 정지 (주사위 제외)
         Time.timeScale = 0f;
-
-        // 버튼 비활성화 (연속 클릭 방지)
-        if (rollButton != null)
-        {
-            rollButton.interactable = false;
-        }
 
         // 주사위를 (0,0) 위치와 큰 크기로 유지 (시작 위치)
         diceRectTransform.anchoredPosition = Vector2.zero;
@@ -111,7 +101,7 @@ public class RollDice : MonoBehaviour
         // 레시피 생성
         if (recipeManager != null)
         {
-            recipeManager.GenerateRecipe(diceNumber);
+            recipeManager.OnNewRecipeGenerated();
         }
 
         // 크기를 줄이면서 dicePos로 이동하는 코루틴 시작
@@ -124,12 +114,6 @@ public class RollDice : MonoBehaviour
         if (blackPanel != null)
         {
             blackPanel.SetActive(false);
-        }
-
-        // 버튼 다시 활성화
-        if (rollButton != null)
-        {
-            rollButton.interactable = true;
         }
 
         isRolling = false;

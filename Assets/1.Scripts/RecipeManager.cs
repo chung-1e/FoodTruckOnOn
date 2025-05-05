@@ -255,6 +255,7 @@ public class RecipeManager : MonoBehaviour
             Destroy(completedBurger);
             completedBurger = null;
             isBurgerCompleted = false;
+            Debug.Log("이전 햄버거가 제거되었습니다.");
         }
     }
 
