@@ -174,6 +174,14 @@ public class RecipeManager : MonoBehaviour
                     {
                         Debug.LogError("피버 시스템이 null입니다! 스트릭 초기화 불가!");
                     }
+
+                    // GameManager에 실패 알림 추가
+                    GameManager gameManager = FindObjectOfType<GameManager>();
+                    if (gameManager != null && diceRoller != null)
+                    {
+                        Debug.Log("GameManager에 실패 알림 전송!");
+                        gameManager.OnBurgerResult(diceRoller.currentDiceValue, false);
+                    }
                 }
 
                 cookingStation.ClearAllFoods();
@@ -232,6 +240,7 @@ public class RecipeManager : MonoBehaviour
                 GameManager gameManager = FindObjectOfType<GameManager>();
                 if (gameManager != null && diceRoller != null)
                 {
+                    Debug.Log("실패 처리 - 게임 매니저에 통보 중...");
                     gameManager.OnBurgerResult(diceRoller.currentDiceValue, false);
                 }
             }
@@ -296,7 +305,7 @@ public class RecipeManager : MonoBehaviour
         // 각 항목이 순서대로 정확한지 확인
         for (int i = 0; i < currentRecipe.Count; i++)
         {
-            if (placedItems[i] != currentRecipe[i]) return true;
+            if (placedItems[i] != currentRecipe[i]) return false;
         }
 
         return true;

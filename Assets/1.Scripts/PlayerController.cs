@@ -284,7 +284,8 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (!placedSuccessfully)        // 조리대에 놓지 않으면 파괴하고 아무것도 들고 있지 않은 상태로 초기화함
+        // 조리대에 놓지 않으면 파괴하고 아무것도 들고 있지 않은 상태로 초기화함
+        if (!placedSuccessfully)
         {
             // 조리대 외 다른 곳에 재료 또는 사이드 메뉴를 놓으면
             Ingredient ingredient = heldIngredient.GetComponent<Ingredient>();
