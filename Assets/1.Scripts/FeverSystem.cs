@@ -29,6 +29,8 @@ public class FeverSystem : MonoBehaviour
     private bool isProcessingHamburger = false; // 햄버거 처리 중 상태 추가
     private float lastBuildTime = 0f; // 마지막으로 햄버거를 만든 시간
 
+    private int currentRecipeIndex = 0; // 현재 추가할 레시피 인덱스
+
     void Start()
     {
         // 초기화 - 모든 이미지를 흑백으로 설정
@@ -39,6 +41,9 @@ public class FeverSystem : MonoBehaviour
         {
             feverPanel.SetActive(false);
         }
+
+        // 인덱스 초기화
+        currentRecipeIndex = 0;
 
         // 필요한 컴포넌트들을 찾아서 할당
         if (cookingStation == null)
@@ -91,22 +96,55 @@ public class FeverSystem : MonoBehaviour
         isProcessingHamburger = true;
         Debug.Log("햄버거 자동 제작 시작 - 처리 중 상태로 전환");
 
-        // 중요: 먼저 조리대를 초기화해야 함
-        cookingStation.ClearAllFoods();
-
-        // 레시피에 따라 재료를 자동으로 쌓기
+        // 첫 Space 입력 시 조리대 초기화 및 인덱스 리셋
         List<string> recipe = recipeManager.GetCurrentRecipe();
-        foreach (string ingredientName in recipe)
+        if (currentRecipeIndex == 0)
         {
+            cookingStation.ClearAllFoods();
+            Debug.Log("새 햄버거 시작 - 조리대 초기화됨");
+        }
+
+        // 현재 인덱스의 재료만 추가
+        if (currentRecipeIndex < recipe.Count)
+        {
+            string ingredientName = recipe[currentRecipeIndex];
             GameObject newIngredient = CreateIngredientByName(ingredientName);
+
             if (newIngredient != null)
             {
                 cookingStation.AddIngredient(newIngredient);
+                Debug.Log($"재료 추가됨: {ingredientName} (인덱스: {currentRecipeIndex + 1}/{recipe.Count})");
+
+                // 다음 재료 인덱스로 이동
+                currentRecipeIndex++;
+
+                // 모든 재료가 추가되었는지 확인
+                if (currentRecipeIndex >= recipe.Count)
+                {
+                    Debug.Log("모든 재료 추가 완료 - 레시피 확인 시작");
+                    // 잠시 후 레시피 완성 확인
+                    StartCoroutine(CompleteRecipeAfterDelay(0.1f));
+                    // 인덱스 리셋
+                    currentRecipeIndex = 0;
+                }
+                else
+                {
+                    // 아직 더 추가할 재료가 있으면 바로 처리 상태 해제
+                    StartCoroutine(ResetProcessingState());
+                }
+            }
+            else
+            {
+                Debug.LogError($"재료 생성 실패: {ingredientName}");
+                StartCoroutine(ResetProcessingState());
             }
         }
-
-        // 레시피 완성 확인 - 스트릭 증가 없이 확인만 수행
-        StartCoroutine(CompleteRecipeAfterDelay(0.01f)); // 약간의 딜레이 후 완성 처리
+        else
+        {
+            // 인덱스가 범위를 벗어나면 리셋
+            currentRecipeIndex = 0;
+            StartCoroutine(ResetProcessingState());
+        }
     }
 
     // 약간의 딜레이 후 레시피 완성 처리 (모든 재료가 쌓이도록)
@@ -273,6 +311,7 @@ public class FeverSystem : MonoBehaviour
     {
         Debug.Log($"스트릭 초기화: {currentStreak} -> 0");
         currentStreak = 0;
+        currentRecipeIndex = 0; // 피버 타임 종료 시 인덱스도 리셋
         UpdateStreakDisplay();
     }
 
