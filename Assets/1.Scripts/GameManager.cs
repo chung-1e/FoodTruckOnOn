@@ -13,8 +13,8 @@ public class GameManager : MonoBehaviour
     private bool isGameActive = false;  // 게임 활성화 상태
 
     [Header("스코어 설정")]
-    public TextMeshProUGUI scoreText;   // 스코어 텍스트
-    public TextMeshProUGUI finalScoreText; // 최종 스코어 텍스트 (게임 종료 시)
+    public Text scoreText;   // 스코어 텍스트
+    public Text finalScoreText; // 최종 스코어 텍스트 (게임 종료 시)
     private int currentScore = 0;       // 현재 스코어
 
     [Header("UI 패널")]
@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     // 주사위 눈에 따른 성공 시 시간 보상 (인덱스 0 = 눈 1)
     private int[] timeRewardsByDice = { 3, 4, 6, 8, 10, 12 };
     // 주사위 눈에 따른 실패 시 시간 패널티
-    private int[] timePenaltiesByDice = { 2, 3, 4, 5, 6, 7 };
+    private int[] timePenaltiesByDice = { 20, 30, 40, 50, 60, 70 };
     // 주사위 눈에 따른 성공 시 점수 보상
     private int[] scoreRewardsByDice = { 10, 20, 30, 40, 50, 60 };
     // 주사위 눈에 따른 실패 시 점수 패널티
@@ -105,20 +105,32 @@ public class GameManager : MonoBehaviour
         // 배열 인덱스는 0부터 시작하므로 보정
         int index = Mathf.Clamp(diceValue - 1, 0, 5);
 
-        int timeChange = 0;
         if (isSuccess)
         {
-            timeChange = timeRewardsByDice[index];
-            timeRemaining += timeChange;
+            // 성공 시 - 시간 추가
+            int timeReward = timeRewardsByDice[index];
+            timeRemaining += timeReward;
         }
         else
         {
-            timeChange = -timePenaltiesByDice[index];
-            timeRemaining = Mathf.Max(0, timeRemaining + timeChange); // 음수 방지
+            // 실패 시 - 시간 즉시 감소 (패널티)
+            int timePenalty = -timePenaltiesByDice[index];
+            timeRemaining = Mathf.Max(0, timeRemaining + timePenalty); // 음수 방지
+
+            // 실패 시 즉시 슬라이더 업데이트
+            if (timerSlider != null)
+            {
+                timerSlider.value = timeRemaining;
+
+                Canvas.ForceUpdateCanvases();
+            }
         }
 
-        // 타이머 슬라이더 업데이트
-        timerSlider.value = timeRemaining;
+        // 성공 시에만 여기서 슬라이더 업데이트
+        if (isSuccess && timerSlider != null)
+        {
+            timerSlider.value = timeRemaining;
+        }
     }
 
     // 스코어 업데이트 (성공/실패에 따른 보상/패널티)
@@ -152,7 +164,7 @@ public class GameManager : MonoBehaviour
     {
         if (scoreText != null)
         {
-            scoreText.text = "Score: " + currentScore.ToString();
+            scoreText.text = currentScore.ToString();
         }
     }
 
