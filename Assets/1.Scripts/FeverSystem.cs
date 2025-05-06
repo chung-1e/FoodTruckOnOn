@@ -123,7 +123,7 @@ public class FeverSystem : MonoBehaviour
                 {
                     Debug.Log("모든 재료 추가 완료 - 레시피 확인 시작");
                     // 잠시 후 레시피 완성 확인
-                    StartCoroutine(CompleteRecipeAfterDelay(0.1f));
+                    StartCoroutine(CompleteRecipeAfterDelay(0.01f));
                     // 인덱스 리셋
                     currentRecipeIndex = 0;
                 }
@@ -161,7 +161,7 @@ public class FeverSystem : MonoBehaviour
     IEnumerator ResetProcessingState()
     {
         // 짧은 딜레이 후 처리 상태 해제 (다음 주사위가 굴러간 후)
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.01f);
         isProcessingHamburger = false;
         Debug.Log("햄버거 처리 상태 초기화 완료 - 다음 입력 가능");
     }

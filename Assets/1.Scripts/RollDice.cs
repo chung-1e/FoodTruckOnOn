@@ -32,6 +32,8 @@ public class RollDice : MonoBehaviour
     private Vector2 originalSize = new Vector2(450, 450);  // 큰 크기
     private Vector2 reducedSize = new Vector2(112.5f, 112.5f);  // 작은 크기
 
+    public int currentDiceValue = 0; // 현재 주사위 값
+
     void Start()
     {
         // 컴포넌트 참조
@@ -119,6 +121,7 @@ public class RollDice : MonoBehaviour
 
         // 주사위 결과 (1~6)
         int diceNumber = finalResult + 1;
+        currentDiceValue = diceNumber; // 현재 값 저장
         Debug.Log($"주사위 결과: {diceNumber}");
 
         //레시피 생성이 더 일찍 호출됨
@@ -157,6 +160,7 @@ public class RollDice : MonoBehaviour
         int finalResult = Random.Range(0, diceSprites.Length);
         diceImage.sprite = diceSprites[finalResult];
         int diceNumber = finalResult + 1;
+        currentDiceValue = diceNumber; // 현재 값 저장
         Debug.Log($"[피버타임] 주사위 결과: {diceNumber}");
 
         // 주사위는 항상 작은 크기와 오른쪽 위치에 유지

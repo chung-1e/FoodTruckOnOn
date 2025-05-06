@@ -205,6 +205,13 @@ public class RecipeManager : MonoBehaviour
                 feverSystem.OnBurgerCompleted();
             }
 
+            // GameManager에 성공 알림
+            GameManager gameManager = FindObjectOfType<GameManager>();
+            if (gameManager != null && diceRoller != null)
+            {
+                gameManager.OnBurgerResult(diceRoller.currentDiceValue, true);
+            }
+
             CreateCompletedBurger();
         }
         else
@@ -220,9 +227,12 @@ public class RecipeManager : MonoBehaviour
                 {
                     feverSystem.OnBurgerFailed();
                 }
-                else
+
+                // GameManager에 실패 알림
+                GameManager gameManager = FindObjectOfType<GameManager>();
+                if (gameManager != null && diceRoller != null)
                 {
-                    Debug.LogError("피버 시스템이 null입니다! 스트릭 초기화 불가!");
+                    gameManager.OnBurgerResult(diceRoller.currentDiceValue, false);
                 }
             }
 
