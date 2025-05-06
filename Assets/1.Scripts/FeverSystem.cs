@@ -15,7 +15,14 @@ public class FeverSystem : MonoBehaviour
     public Sprite[] colorSprites;  // 서로 다른 5개의 컬러 이미지
 
     [Header("피버 타임 설정")]
-    public float feverDuration = 10f;   // 피버 타임 지속시간
+    public float feverDuration = 10f;   // 피버 타임 지속시간: 10초
+    public float feverPanelDuration = 1f; // 피버 패널 표시 시간: 1초
+
+    // 추가
+    [Header("필요 컴포넌트 할당")]
+    public CookingStation cookingStation;
+    public RecipeManager recipeManager;
+    public RollDice diceRoller;
 
     private int currentStreak = 0;  // 현재 연속 성공 횟수
     private bool isInFever = false; // 피버 타임 중인지
@@ -30,6 +37,65 @@ public class FeverSystem : MonoBehaviour
         {
             feverPanel.SetActive(false);
         }
+
+        // 필요한 컴포넌트들을 찾아서 할당
+        if (cookingStation == null)
+            cookingStation = FindObjectOfType<CookingStation>();
+        if (recipeManager == null)
+            recipeManager = FindObjectOfType<RecipeManager>();
+        if (diceRoller == null)
+            diceRoller = FindObjectOfType<RollDice>();
+    }
+
+    private void Update()
+    {
+        // 피버 타임 중이고 스페이스바를 누른 경우, 자동으로 재료 쌓기
+        if (isInFever && Input.GetKeyDown(KeyCode.Space))
+        {
+            if(cookingStation != null && recipeManager != null)
+            {
+                AutoBuildBurger();
+            }
+        }
+    }
+
+    // 햄버거를 자동으로 만드는 향수
+    public void AutoBuildBurger()
+    {
+        if (!isInFever || cookingStation == null || recipeManager == null) return;
+
+        // 현재 조리대 초기화
+        cookingStation.ClearAllFoods();
+
+        // 레시피레 따라 재료들 자동으로 쌓기
+        List<string> recipe = recipeManager.GetCurrentRecipe();
+        foreach (string ingredientName in recipe)
+        {
+            GameObject newIngredient = CreateIngredientByName(ingredientName);
+            if (newIngredient != null )
+            {
+                cookingStation.AddIngredient(newIngredient);
+            }
+        }
+
+        // 레시피 완성 화면 - 콤보 게이지 증가 없이 확인만 수행
+        recipeManager.CheckRecipeCompletion();
+    }
+
+    // 재료 이름에 따라 새 재료를 생성하는 함수
+    private GameObject CreateIngredientByName(string ingredientName)
+    {
+        IngredientStation[] stations = FindObjectsOfType<IngredientStation>();
+        foreach (IngredientStation station in stations)
+        {
+            if (station.GetIngredientName() == ingredientName ||
+                (ingredientName == "아래 빵" && station.stationType == IngredientStation.IngredientType.Bread) ||
+                (ingredientName == "위 빵" && station.stationType == IngredientStation.IngredientType.Bread))
+            {
+                return station.SpawnIngredient();
+            }
+        }
+        return null;
     }
 
     // 햄버거 완성 시 호출
@@ -51,7 +117,13 @@ public class FeverSystem : MonoBehaviour
     {
         if (isInFever)
         {
+            Debug.Log("햄버거 실패! 콤보 게이지 초기화");
             ResetStreak();
+        }
+        else
+        {
+            // 혹시라도 버그가 발생할 것을 대비하여
+            Debug.Log("피버 타임 중 실패는 콤보 게이지 영향 없음");
         }
     }
 
@@ -77,8 +149,27 @@ public class FeverSystem : MonoBehaviour
     private void StartFever()
     {
         isInFever = true;
-        feverPanel.SetActive(true);
+        Debug.Log("피버 타임 시작!");
+
+        if (feverPanel != null)
+        {
+            feverPanel.SetActive(true);
+            // 패널은 1초만 표시하고 숨기지만, 피버 상태는 계속 유지
+            StartCoroutine(HideFeverPanel());
+        }
+
+        // 피버 타임은 10초 동안 유지
         StartCoroutine(FeverTimer());
+    }
+
+    IEnumerator HideFeverPanel()
+    {
+        yield return new WaitForSeconds(feverPanelDuration);
+        if (feverPanel != null)
+        {
+            feverPanel.SetActive(false);
+            Debug.Log(" 피버 패널 숨김 (피버 타임은 계속 유지)");
+        }
     }
 
     // 피버 타임 타이머
@@ -92,7 +183,10 @@ public class FeverSystem : MonoBehaviour
     private void EndFever()
     {
         isInFever = false;
-        feverPanel.SetActive(false);
+        if (feverPanel != null)
+        {
+            feverPanel.SetActive(false);
+        }
         ResetStreak();
     }
 

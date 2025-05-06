@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +23,9 @@ public class RollDice : MonoBehaviour
 
     [Header("시간 제어")]
     public GameObject blackPanel;  // 블랙 패널 GameObject
+
+    [Header("피버 시스템")]
+    public FeverSystem feverSystem;
 
     private bool isRolling = false;  // 현재 주사위가 굴러가고 있는지 확인
     private RectTransform diceRectTransform;  // 주사위의 RectTransform
@@ -47,6 +51,12 @@ public class RollDice : MonoBehaviour
             blackPanel.SetActive(false);
         }
 
+        // 피버 시스템 참조 찾기
+        if (feverSystem == null)
+        {
+            feverSystem = FindObjectOfType<FeverSystem>();
+        }
+
         // 게임 시작 시 첫 번째 주사위 굴리기
         Rolling();
     }
@@ -56,8 +66,15 @@ public class RollDice : MonoBehaviour
         // 이미 굴러가고 있다면 무시
         if (isRolling) return;
 
-        // 코루틴 시작
-        StartCoroutine(RollDiceCoroutine());
+        // 피버 타임 중이면 빠른 롤링 실행
+        if (feverSystem != null && feverSystem.IsInFever())
+        {
+            StartCoroutine(QuickRollDiceCoroutine());
+        }
+        else
+        {
+            StartCoroutine(RollDiceCoroutine());
+        }
     }
 
     IEnumerator RollDiceCoroutine()
@@ -123,6 +140,36 @@ public class RollDice : MonoBehaviour
         }
 
         isRolling = false;
+    }
+
+    // 피버 타임 중 빠른 주사위 굴림 코루틴
+    IEnumerator QuickRollDiceCoroutine()
+    {
+        isRolling = true;
+
+        // 이전 레시피 초기화
+        if (recipeManager != null)
+        {
+            recipeManager.OnNewRecipeGenerated();
+        }
+
+        // 즉시 결과 생성
+        int finalResult = Random.Range(0, diceSprites.Length);
+        diceImage.sprite = diceSprites[finalResult];
+        int diceNumber = finalResult + 1;
+        Debug.Log($"[피버타임] 주사위 결과: {diceNumber}");
+
+        // 주사위는 항상 작은 크기와 오른쪽 위치에 유지
+        diceRectTransform.anchoredPosition = dicePos;
+        diceRectTransform.sizeDelta = reducedSize;
+
+        if (recipeManager != null)
+        {
+            recipeManager.GenerateRecipe(diceNumber);
+        }
+
+        isRolling = false;
+        yield break;
     }
 
     IEnumerator ShrinkAndMoveToDicePos()

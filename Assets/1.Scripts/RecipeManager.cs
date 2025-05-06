@@ -42,6 +42,12 @@ public class RecipeManager : MonoBehaviour
         {
             Debug.LogError("RollDice 컴포넌트가 할당되지 않았습니다!");
         }
+
+        // 피버 시스템 참조 찾기
+        if (feverSystem == null)
+        {
+            feverSystem = FindObjectOfType<FeverSystem>();
+        }
     }
 
     void InitializeIngredientNames()
@@ -60,6 +66,11 @@ public class RecipeManager : MonoBehaviour
         };
     }
 
+    // 현재 레시피 반환하는 함수
+    public List<string> GetCurrentRecipe()
+    {
+        return currentRecipe;
+    }
 
     public void GenerateRecipe(int diceNumber)
     {
@@ -143,8 +154,9 @@ public class RecipeManager : MonoBehaviour
                 Debug.Log($"잘못된 순서! 위치 {i}: 예상 '{(i < currentRecipe.Count ? currentRecipe[i] : "없음")}' 실제 '{currentIngredients[i]}'");
 
                 // 피버 시스템에 실패 알림
-                if (feverSystem != null)
+                if (feverSystem != null && !feverSystem.IsInFever())
                 {
+                    Debug.Log("실패로 인한 콤보 게이지 초기화!");
                     feverSystem.OnBurgerFailed();
                 }
 
@@ -174,7 +186,11 @@ public class RecipeManager : MonoBehaviour
 
             if (feverSystem != null)
             {
-                feverSystem.OnBurgerCompleted();
+                // 피버타임이 아닐 때만 버거 완성 카운트 증가
+                if (!feverSystem.IsInFever())
+                {
+                    feverSystem.OnBurgerCompleted();
+                }
             }
 
             CreateCompletedBurger();
@@ -256,18 +272,29 @@ public class RecipeManager : MonoBehaviour
 
     private void CreateCompletedBurger()
     {
+        Debug.Log("CreateCompletedBuger 호출됨");
+
         // 조리대 위 모든 재료 제거
         cookingStation.ClearAllFoods();
 
-        // 햄버거 프리팹 생성
-        Vector3 burgerPosition = cookingStation.transform.position + Vector3.up * 0.3f;
-        completedBurger = Instantiate(cookingStation.hamburgerPrefab, burgerPosition, Quaternion.identity);
-        completedBurger.name = "완성된 햄버거";
+        // 피버 타임 중인지 확인
+        bool isInFever = (feverSystem != null && feverSystem.IsInFever());
 
-        isBurgerCompleted = true;
+        // 피버 타임이 아닐 때만 햄버거 생성
+        if (isInFever)
+        {
+            Vector3 burgerPosition = cookingStation.transform.position + Vector3.up * 0.3f;
+            completedBurger = Instantiate(cookingStation.hamburgerPrefab, burgerPosition, Quaternion.identity);
+            completedBurger.name = "완성된 햄버거";
 
-        Debug.Log("TriggerNextDice 코루틴 시작");
-        StartCoroutine(TriggerNextDice());
+            isBurgerCompleted = true;
+        }
+        else
+        {
+            // 피버 타임 중에는 햄버거를 생성하지 않고 바로 다음 단계로
+            Debug.Log("TriggerNextDice 코루틴 시작");
+            StartCoroutine(TriggerNextDice());
+        }
     }
 
     public void OnNewRecipeGenerated()
@@ -331,7 +358,19 @@ public class RecipeManager : MonoBehaviour
     {
         Debug.Log($"TriggerNextDice 시작 - 현재 Time.timeScale: {Time.timeScale}");
 
-        yield return new WaitForSecondsRealtime(burgerDisplayDuration);
+        // 피버 타임 중인지 확인
+        bool isInFever = (feverSystem != null && feverSystem.IsInFever());
+
+        // 피버 타임이 아닐 때만 대기
+        if (!isInFever)
+        {
+            yield return new WaitForSecondsRealtime(burgerDisplayDuration);
+        }
+        else
+        {
+            // 피버 타임일 때는 최소한의 대기 시간
+            yield return null;
+        }
 
         Debug.Log("TriggerNextDice = 주사위 굴리기 시작");
 

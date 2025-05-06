@@ -807,6 +807,7 @@ MonoBehaviour:
   dicePos: {x: -804.9657, y: 463.347}
   shrinkDuration: 1
   blackPanel: {fileID: 131829448}
+  feverSystem: {fileID: 1498012826}
 --- !u!1 &185264915
 GameObject:
   m_ObjectHideFlags: 0
@@ -2672,6 +2673,10 @@ MonoBehaviour:
   - {fileID: -111579826, guid: 204a3e2380ecb5040ad84c6bcb041bb7, type: 3}
   - {fileID: 1125805746, guid: 204a3e2380ecb5040ad84c6bcb041bb7, type: 3}
   feverDuration: 10
+  feverPanelDuration: 1
+  cookingStation: {fileID: 681203958}
+  recipeManager: {fileID: 1806285201}
+  diceRoller: {fileID: 182315805}
 --- !u!1 &1571345826
 GameObject:
   m_ObjectHideFlags: 0
