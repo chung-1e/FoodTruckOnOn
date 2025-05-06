@@ -22,7 +22,9 @@ public class RecipeManager : MonoBehaviour
 
     // 현재 레시피
     private List<string> currentRecipe = new List<string>();
+
     private int requiredMainIngredients = 0;    // 메인 재료의 개수
+
     private bool requiresFrenchFries = false;
     private bool requiresCola = false;
 
@@ -31,6 +33,7 @@ public class RecipeManager : MonoBehaviour
 
     //햄버거 완성 상태
     private bool isBurgerCompleted = false;
+
     private GameObject completedBurger = null;
 
     void Start()
@@ -47,6 +50,10 @@ public class RecipeManager : MonoBehaviour
         if (feverSystem == null)
         {
             feverSystem = FindObjectOfType<FeverSystem>();
+            if (feverSystem == null)
+            {
+                Debug.LogError("피버 시스템을 찾을 수 없습니다!");
+            }
         }
     }
 
@@ -59,8 +66,8 @@ public class RecipeManager : MonoBehaviour
             { IngredientStation.IngredientType.Lettuce, "양상추" },
             { IngredientStation.IngredientType.Tomato, "토마토" },
             { IngredientStation.IngredientType.Cheese, "치즈" },
-            { IngredientStation.IngredientType.Shrimp, "새우" },    // 새우 추가
-            { IngredientStation.IngredientType.Chicken, "치킨" },   // 치킨 추가
+            { IngredientStation.IngredientType.Shrimp, "새우" },
+            { IngredientStation.IngredientType.Chicken, "치킨" },
             { IngredientStation.IngredientType.FrenchFries, "감자튀김" },
             { IngredientStation.IngredientType.Cola, "콜라" }
         };
@@ -81,6 +88,7 @@ public class RecipeManager : MonoBehaviour
 
         // 메인 재료들 (주사위 눈 수만큼)
         requiredMainIngredients = diceNumber;
+
         for (int i = 0; i < diceNumber; i++)
         {
             // 무작위로 메인 재료 선택 (패티, 양상추, 토마토, 치즈, 새우, 치킨 중에서)
@@ -89,9 +97,9 @@ public class RecipeManager : MonoBehaviour
             IngredientStation.IngredientType.Lettuce,
             IngredientStation.IngredientType.Tomato,
             IngredientStation.IngredientType.Cheese,
-            IngredientStation.IngredientType.Shrimp,   // 새우 추가
-            IngredientStation.IngredientType.Chicken   // 치킨 추가
-    };
+            IngredientStation.IngredientType.Shrimp,
+            IngredientStation.IngredientType.Chicken
+            };
 
             int randomIndex = Random.Range(0, mainIngredients.Length);
             string ingredientName = ingredientNames[mainIngredients[randomIndex]];
@@ -153,11 +161,19 @@ public class RecipeManager : MonoBehaviour
             {
                 Debug.Log($"잘못된 순서! 위치 {i}: 예상 '{(i < currentRecipe.Count ? currentRecipe[i] : "없음")}' 실제 '{currentIngredients[i]}'");
 
-                // 피버 시스템에 실패 알림
-                if (feverSystem != null && !feverSystem.IsInFever())
+                // 피버 타임이 아닐 때는 무조건 실패 처리
+                bool isInFever = (feverSystem != null && feverSystem.IsInFever());
+                if (!isInFever)
                 {
-                    Debug.Log("실패로 인한 콤보 게이지 초기화!");
-                    feverSystem.OnBurgerFailed();
+                    Debug.Log("실패로 인한 스트릭 초기화 호출!");
+                    if (feverSystem != null)
+                    {
+                        feverSystem.OnBurgerFailed();
+                    }
+                    else
+                    {
+                        Debug.LogError("피버 시스템이 null입니다! 스트릭 초기화 불가!");
+                    }
                 }
 
                 cookingStation.ClearAllFoods();
@@ -177,20 +193,16 @@ public class RecipeManager : MonoBehaviour
     {
         // 현재 조리대에 있는 모든 재료 가져오기
         List<string> placedItems = GetPlacedItemsInOrder();
-        Debug.Log($"현재 배치된 아이템들: {string.Join(", ", placedItems)}");
 
-        //레시피와 비교
+        // 레시피와 비교
         if (IsRecipeCorrect(placedItems))
         {
             Debug.Log("완벽합니다!");
 
-            if (feverSystem != null)
+            bool isInFever = (feverSystem != null && feverSystem.IsInFever());
+            if (feverSystem != null && !isInFever)
             {
-                // 피버타임이 아닐 때만 버거 완성 카운트 증가
-                if (!feverSystem.IsInFever())
-                {
-                    feverSystem.OnBurgerCompleted();
-                }
+                feverSystem.OnBurgerCompleted();
             }
 
             CreateCompletedBurger();
@@ -199,9 +211,19 @@ public class RecipeManager : MonoBehaviour
         {
             Debug.Log("잘못 만들었습니다.");
 
-            if (feverSystem != null)
+            // 피버 타임이 아닐 때는 무조건 실패 처리
+            bool isInFever = (feverSystem != null && feverSystem.IsInFever());
+            if (!isInFever)
             {
-                feverSystem.OnBurgerFailed();
+                Debug.Log("잘못된 레시피로 인한 스트릭 초기화 호출!");
+                if (feverSystem != null)
+                {
+                    feverSystem.OnBurgerFailed();
+                }
+                else
+                {
+                    Debug.LogError("피버 시스템이 null입니다! 스트릭 초기화 불가!");
+                }
             }
 
             cookingStation.ClearAllFoods();
@@ -278,23 +300,36 @@ public class RecipeManager : MonoBehaviour
         cookingStation.ClearAllFoods();
 
         // 피버 타임 중인지 확인
-        bool isInFever = (feverSystem != null && feverSystem.IsInFever());
+        bool isInFever = false;
+        if (feverSystem != null)
+        {
+            isInFever = feverSystem.IsInFever();
+            Debug.Log("현재 피버 상태: " + (isInFever ? "피버 타임 중" : "일반 모드"));
+        }
+        else
+        {
+            Debug.LogError("피버 시스템이 null입니다!");
+        }
 
         // 피버 타임이 아닐 때만 햄버거 생성
-        if (isInFever)
+        if (!isInFever)
         {
+            Debug.Log("일반 모드 - 완성된 햄버거 생성");
             Vector3 burgerPosition = cookingStation.transform.position + Vector3.up * 0.3f;
             completedBurger = Instantiate(cookingStation.hamburgerPrefab, burgerPosition, Quaternion.identity);
             completedBurger.name = "완성된 햄버거";
-
             isBurgerCompleted = true;
         }
         else
         {
             // 피버 타임 중에는 햄버거를 생성하지 않고 바로 다음 단계로
-            Debug.Log("TriggerNextDice 코루틴 시작");
-            StartCoroutine(TriggerNextDice());
+            Debug.Log("피버 타임 중 - 햄버거 생성 건너뜀");
+            isBurgerCompleted = true;
+            completedBurger = null;
         }
+
+        Debug.Log("TriggerNextDice 코루틴 시작");
+        StartCoroutine(TriggerNextDice());
     }
 
     public void OnNewRecipeGenerated()
@@ -321,14 +356,14 @@ public class RecipeManager : MonoBehaviour
                 string name = ingredient.name;
 
                 if (name.Contains("아래 빵") || name == "bread_bottom")
-            {
+                {
                     currentIngredients.Add("아래 빵");
                 }
-            else if (name.Contains("위 빵") || name == "bread_top")
-            {
+                else if (name.Contains("위 빵") || name == "bread_top")
+                {
                     currentIngredients.Add("위 빵");
                 }
-            else
+                else
                 {
                     Ingredient ingredientComponent = ingredient.GetComponent<Ingredient>();
                     if (ingredientComponent != null && ingredientNames.ContainsKey(ingredientComponent.type))
@@ -368,11 +403,11 @@ public class RecipeManager : MonoBehaviour
         }
         else
         {
-            // 피버 타임일 때는 최소한의 대기 시간
+            // 피버 타임일 때는 즉시 다음 주사위 (대기 시간 없음)
             yield return null;
         }
 
-        Debug.Log("TriggerNextDice = 주사위 굴리기 시작");
+        Debug.Log("TriggerNextDice - 주사위 굴리기 시작");
 
         if (diceRoller != null)
         {
@@ -382,5 +417,14 @@ public class RecipeManager : MonoBehaviour
         {
             Debug.Log("diceRoller가 null입니다!");
         }
+
+        // 햄버거 처리 완료 표시
+        isBurgerCompleted = false;
+    }
+
+    // 피버 타임 중 연타 버그 방지를 위한 추가 함수
+    public bool IsProcessingRecipe()
+    {
+        return isBurgerCompleted;
     }
 }
