@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     private GameObject heldIngredient;             // 잡고 있는 재료 오브젝트
 
     private bool isMoving = false;
+    private bool isIngredient = false;
     private Vector2 lastDirection = Vector2.down;
 
     // 재료 잡기 설정
@@ -31,6 +32,7 @@ public class PlayerController : MonoBehaviour
     private const string s_walk = "s_walk";
 
     private const string is_walking = "isWalking";
+    private const string is_ingredient = "isIngredient";
 
     void Start()
     {
@@ -65,13 +67,13 @@ public class PlayerController : MonoBehaviour
         float moveY = 0f;
 
         // 방향키로 변경
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         { moveY = 1f; }
-        if (Input.GetKey(KeyCode.DownArrow))
+        if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         { moveY = -1f; }
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         { moveX = -1f; }
-        if (Input.GetKey(KeyCode.RightArrow))
+        if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         { moveX = 1f; }
 
         Vector2 movement = new Vector2(moveX, moveY).normalized * moveSpeed;
@@ -80,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
         rb.velocity = movement;
 
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Space))
         {
             if (!isHoldingInredient)    // 재료를 잡고 잇다
             {
@@ -121,7 +123,7 @@ public class PlayerController : MonoBehaviour
                     heldIngredient = newIngredient;
                     isHoldingInredient = true;
 
-                    // 디버깅: 현재 설정 값 확인
+                    // 디버깅 : 현재 설정 값 확인
                     Debug.Log($"현재 ingredientHoldHeight: {ingredientHoldHeight}");
                     Debug.Log($"현재 ingredientHoldOffset: {ingredientHoldOffset}");
 
@@ -155,6 +157,16 @@ public class PlayerController : MonoBehaviour
 
         // 걷기 상태 설정
         animator.SetBool(is_walking, isMoving);
+
+        // 재료를 들고 있는지의 여부 확인
+        isIngredient = isHoldingInredient != false;
+
+        // 손 들고 잇는 상태 설정
+        animator.SetBool(is_ingredient, isIngredient);
+        if (isIngredient == true)
+        {
+            animator.SetBool(is_ingredient, true);
+        }
 
         // 모든 방향 애니메이션 비활성화
         animator.SetBool(w_idle, false);
