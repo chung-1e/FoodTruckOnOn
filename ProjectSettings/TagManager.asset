@@ -39,6 +39,9 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: "\uBC30\uACBD\uC0C9"
+    uniqueID: 3851186897
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
