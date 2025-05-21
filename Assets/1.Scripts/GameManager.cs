@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -45,6 +46,8 @@ public class GameManager : MonoBehaviour
 
         // 게임 시작 설정
         InitializeGame();
+
+    
     }
 
     void Update()
@@ -53,6 +56,8 @@ public class GameManager : MonoBehaviour
         {
             UpdateTimer();
         }
+     
+    
     }
 
     // 게임 초기화
@@ -203,6 +208,10 @@ public class GameManager : MonoBehaviour
             return;
 
         isGameActive = false;
+       
+         // 현재 점수를 ScoreManager에 저장
+    ScoreManager.Instance.currentScore = currentScore;
+
         Debug.Log("게임 종료! 최종 스코어: " + currentScore);
 
         // 게임 오버 패널 활성화
@@ -214,7 +223,10 @@ public class GameManager : MonoBehaviour
         }
 
         // 게임 일시정지 (선택 사항)
-        Time.timeScale = 0;
+        Time.timeScale = 1;
+
+        // Exit 씬으로 전환
+     SceneManager.LoadScene("Exit");
     }
 
     // 재시작 버튼 (게임 오버 패널에서 사용)
@@ -227,3 +239,5 @@ public class GameManager : MonoBehaviour
         InitializeGame();
     }
 }
+
+

@@ -1,24 +1,22 @@
-using System.Collections;
-using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverScreen : MonoBehaviour
 {
- public void RestartButton()
- {
-	 SceneManager.LoadScene("IngameSceme");
- }
- 
- public void RankingButton()
- {
-	 SceneManager.LoadScene("RankingScene");
- }
+    public GameObject nicknamePopup; 
 
- public void ExitButton()
+    public void RestartButton()
+    {
+        SceneManager.LoadScene("IngameSceme"); 
+    }
 
- {
-    SceneManager.LoadScene("MainScene");
- }
+    public void RankingButton()
+    {
+        nicknamePopup.SetActive(true); // ´Ð³×ÀÓ ÆË¾÷ ¶ç¿ì±â
+    }
 
+    public void ExitButton()
+    {
+        SceneManager.LoadScene("MainScene");
+    }
 }
