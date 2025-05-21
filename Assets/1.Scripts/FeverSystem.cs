@@ -37,7 +37,7 @@ public class FeverSystem : MonoBehaviour
         ResetStreak();
 
         // 피버 패널 비활성화
-        if (feverPanel != null )
+        if (feverPanel != null)
         {
             feverPanel.SetActive(false);
         }
@@ -320,5 +320,4 @@ public class FeverSystem : MonoBehaviour
     {
         return isInFever;
     }
-
 }

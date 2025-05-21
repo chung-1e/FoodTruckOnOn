@@ -83,8 +83,8 @@ public class RecipeManager : MonoBehaviour
     {
         currentRecipe.Clear();
 
-        // ¾Æ·¡ »§
-        currentRecipe.Add("¾Æ·¡ »§");
+        // ¾Æ·¡ »§(¾Æ·¡ »§, À§ »§ ÀüºÎ '»§'À¸·Î ÅëÀÏ -> È¤½Ã ¸ô¶ó ÄÚµå´Â ¾È Áö¿ò!)
+        currentRecipe.Add("»§");
 
         // ¸ÞÀÎ Àç·áµé (ÁÖ»çÀ§ ´« ¼ö¸¸Å­)
         requiredMainIngredients = diceNumber;
@@ -106,8 +106,8 @@ public class RecipeManager : MonoBehaviour
             currentRecipe.Add(ingredientName);
         }
 
-        // À§ »§
-        currentRecipe.Add("À§ »§");
+        // À§ »§(¾Æ·¡ »§, À§ »§ ÀüºÎ '»§'À¸·Î ÅëÀÏ -> È¤½Ã ¸ô¶ó ÄÚµå´Â ¾È Áö¿ò!)
+        currentRecipe.Add("»§");
 
         // »çÀÌµå ¸Þ´º - ±âÁ¸ ±ÔÄ¢ À¯Áö (ÁÖ»çÀ§ 5: °¨ÀÚÆ¢±è, ÁÖ»çÀ§ 6: °¨ÀÚÆ¢±è+ÄÝ¶ó)
         requiresFrenchFries = (diceNumber >= 5);
@@ -262,11 +262,11 @@ public class RecipeManager : MonoBehaviour
 
                 if (name.Contains("¾Æ·¡ »§") || name == "bread_bottom")
                 {
-                    placedItems.Add("¾Æ·¡ »§");
+                    placedItems.Add("»§");
                 }
                 else if (name.Contains("À§ »§") || name == "bread_top")
                 {
-                    placedItems.Add("À§ »§");
+                    placedItems.Add("»§");
                 }
                 else
                 {
@@ -376,11 +376,11 @@ public class RecipeManager : MonoBehaviour
 
                 if (name.Contains("¾Æ·¡ »§") || name == "bread_bottom")
                 {
-                    currentIngredients.Add("¾Æ·¡ »§");
+                    currentIngredients.Add("»§");
                 }
                 else if (name.Contains("À§ »§") || name == "bread_top")
                 {
-                    currentIngredients.Add("À§ »§");
+                    currentIngredients.Add("»§");
                 }
                 else
                 {
