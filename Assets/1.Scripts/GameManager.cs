@@ -223,6 +223,10 @@ public class GameManager : MonoBehaviour
        
          // 현재 점수를 ScoreManager에 저장
     ScoreManager.Instance.currentScore = currentScore;
+    // 랭킹 닉네임 저장
+    string nickname = PlayerPrefs.GetString("PlayerNickname", "Unknown");
+    
+    RankingManager.Instance.AddRank(nickname, currentScore);
 
         Debug.Log("게임 종료! 최종 스코어: " + currentScore);
 
