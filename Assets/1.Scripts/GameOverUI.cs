@@ -15,7 +15,7 @@ public class GameOverUI : MonoBehaviour
 
     if (ScoreManager.Instance == null)
     {
-        Debug.LogError("ScoreManager가 null입니다! 이 씬에 살아 있는지 확인해주세요.");
+        Debug.LogError("ScoreManager가 null입니다! 이 씬에 살아 있는지 확인해주세요."); // 바로 exit씬에서 다시하기 누르면 뜸 (에러가 아님)
         return;
     }
 
