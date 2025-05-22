@@ -91,6 +91,12 @@ public class GameManager : MonoBehaviour
     // 타이머 업데이트
     void UpdateTimer()
     {
+        // 피버 타임 중엔 타이머 멈춤
+        if (feverSystem != null && feverSystem.IsInFever())
+        {
+            return; // 피버 타임 중엔 시간이 흐르지 않게
+        }
+
         if (timeRemaining > 0)
         {
             timeRemaining -= Time.deltaTime;
@@ -107,6 +113,12 @@ public class GameManager : MonoBehaviour
     // 시간 변경 (성공/실패에 따른 보상/패널티)
     public void ChangeTime(int diceValue, bool isSuccess)
     {
+        // 피버 타임 중엔 타이머 멈춤
+        if (feverSystem != null && feverSystem.IsInFever())
+        {
+            return; // 피버 타임 중엔 시간이 흐르지 않게
+        }
+
         // 배열 인덱스는 0부터 시작하므로 보정
         int index = Mathf.Clamp(diceValue - 1, 0, 5);
 

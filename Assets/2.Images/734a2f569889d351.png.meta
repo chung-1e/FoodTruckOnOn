@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8f4f4ba98625e0c43b2dea59154a0c4f
+guid: 614795c3a1e1a5549b6ffc769e5b42e2
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -89,35 +89,26 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: combo_gauge_0
+      name: "\uCF64\uBCF4 \uD2C0"
       rect:
         serializedVersion: 2
-        x: 11
-        y: 8
-        width: 110
-        height: 349
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: badc18a6f59042f4685fae5d206d3598
-      internalID: -472723780
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: combo_gauge_1
-      rect:
-        serializedVersion: 2
-        x: 122
+        x: 4
         y: 5
         width: 116
         height: 354
@@ -128,17 +119,38 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fd3348442d17afe46ac425cde122d99c
-      internalID: 541277873
+      spriteID: 8c142481eb81a604f8280fd8842e5cfc
+      internalID: -760022763
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: combo_gauge_2
+      name: "\uCF64\uBCF4"
       rect:
         serializedVersion: 2
-        x: 247
+        x: 125
+        y: 8
+        width: 110
+        height: 349
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90de3816228012143bfd56945630bc34
+      internalID: -1679464035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: 5
+      rect:
+        serializedVersion: 2
+        x: 249
         y: 269
         width: 71
         height: 57
@@ -149,17 +161,17 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 25e217da37777844386f7a5f25050a4f
-      internalID: -391181924
+      spriteID: 6c0008dc43710e142b2013d65bfad9a9
+      internalID: -1471092235
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: combo_gauge_3
+      name: 4
       rect:
         serializedVersion: 2
-        x: 247
+        x: 249
         y: 211
         width: 71
         height: 56
@@ -170,18 +182,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cedeb6baa261f643ac843892d25799f
-      internalID: -2094823259
+      spriteID: e27797e61345b254dad8d9602b7311ec
+      internalID: 1476638124
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: combo_gauge_4
+      name: 3
       rect:
         serializedVersion: 2
-        x: 247
-        y: 153
+        x: 249
+        y: 152
         width: 71
         height: 56
       alignment: 0
@@ -191,18 +203,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fb66bbcc037a8d44082b3ec662f71ad0
-      internalID: -172757923
+      spriteID: 522711a048724a043b1767d98bafb364
+      internalID: 59607762
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: combo_gauge_5
+      name: 2
       rect:
         serializedVersion: 2
-        x: 247
-        y: 95
+        x: 249
+        y: 93
         width: 71
         height: 56
       alignment: 0
@@ -212,18 +224,18 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: caae76407b46ed74c8b366efdb7991c5
-      internalID: -120573286
+      spriteID: a27d656a2f956324ab53b43ef8a2e31d
+      internalID: -1826839123
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: combo_gauge_6
+      name: 1
       rect:
         serializedVersion: 2
-        x: 247
-        y: 37
+        x: 249
+        y: 34
         width: 71
         height: 56
       alignment: 0
@@ -233,29 +245,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc02a5e59d6134649badbf74e0e95df8
-      internalID: 334299323
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: combo_gauge_none
-      rect:
-        serializedVersion: 2
-        x: 264
-        y: 340
-        width: 55
-        height: 27
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 51cb5cc1de7d05b4e9932b1542bfaa20
-      internalID: 1491085454
+      spriteID: 34664217aedfebd45956ac5a11aa38dd
+      internalID: 254223005
       vertices: []
       indices: 
       edges: []
@@ -271,14 +262,13 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      combo_gauge_0: -472723780
-      combo_gauge_1: 541277873
-      combo_gauge_2: -391181924
-      combo_gauge_3: -2094823259
-      combo_gauge_4: -172757923
-      combo_gauge_5: -120573286
-      combo_gauge_6: 334299323
-      combo_gauge_none: 1491085454
+      1: 254223005
+      2: -1826839123
+      3: 59607762
+      4: 1476638124
+      5: -1471092235
+      "\uCF64\uBCF4": -1679464035
+      "\uCF64\uBCF4 \uD2C0": -760022763
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
