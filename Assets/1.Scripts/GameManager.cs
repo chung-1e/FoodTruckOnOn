@@ -254,6 +254,24 @@ public class GameManager : MonoBehaviour
         // 게임 다시 초기화
         InitializeGame();
     }
+public TMP_InputField nicknameInputField;  
+
+public void SavePlayerNickname()
+{
+    string playerNickname = nicknameInputField.text;
+    if (!string.IsNullOrEmpty(playerNickname))
+    {
+        PlayerPrefs.SetString("PlayerNickname", playerNickname);
+        PlayerPrefs.Save();
+        Debug.Log("닉네임 저장 완료: " + playerNickname);
+    }
+    else
+    {
+        Debug.LogWarning("닉네임이 비어있습니다.");
+    }
+}
+
+
 }
 
 

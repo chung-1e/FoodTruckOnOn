@@ -6,15 +6,21 @@ using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
-    [Header("버튼설정")]
-    [SerializeField] private Button startButton;    // 시작 버튼
-    [SerializeField] private Button SettingButton;    // 세팅 버튼
-    [SerializeField] private Button ExitButton;    // 나가기 버튼
-    // 넘어갈 씬의 이름
+    [Header("버튼 설정")]
+    [SerializeField] private Button startButton;
+    [SerializeField] private Button SettingButton;
+    [SerializeField] private Button ExitButton;
+    [SerializeField] private Button businessStartButton;
+
+    [Header("씬 이름")]
     [SerializeField] private string gameSceneName = "MapScene";
     [SerializeField] private string test = "Setting";
     [SerializeField] private string test1 = "Exit";
+    [SerializeField] private string test2 = "IngameSceme";
     
+    [Header("랭킹 UI")]
+    [SerializeField] private GameObject rankingPopup;
+
     void Awake()
     {
         if (startButton == null)
@@ -23,23 +29,35 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    // 게임 씬 로드
     public void StartGame()
     {
         SceneManager.LoadScene(gameSceneName);
     }
+
     public void Setting()
     {
         SceneManager.LoadScene(test);
     }
+
     public void Exit()
     {
         SceneManager.LoadScene(test1);
     }
+
+    public void OpenRankingPopup()
+    {
+        if (rankingPopup != null)
+            rankingPopup.SetActive(true);
+    }
+
+    public void CloseRankingPopup()
+    {
+        if (rankingPopup != null)
+            rankingPopup.SetActive(false);
+    }
+public void OnBusinessStart()
+{
+    SceneManager.LoadScene(test2);
+}
+
 }

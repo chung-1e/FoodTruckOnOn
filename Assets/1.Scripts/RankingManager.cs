@@ -62,4 +62,6 @@ public class RankingManager : MonoBehaviour
             rankList = JsonUtility.FromJson<RankData>(json).ranks;
         }
     }
+
+
 }
