@@ -9,6 +9,7 @@ public class FeverSystem : MonoBehaviour
     public Image frameImage;    // 큰 툴 이미지
     public Image[] streakImages;  // 5개의 이미지 배열 (0이 아래, 4가 위)
     public GameObject feverPanel;   // 피버 타임 패널
+    public GameObject comboTypo;    // 콤보 타이포
 
     [Header("이미지 스트라이트")]
     public Sprite[] grayscaleSprites;  // 서로 다른 5개의 흑백 이미지
@@ -40,6 +41,11 @@ public class FeverSystem : MonoBehaviour
         if (feverPanel != null)
         {
             feverPanel.SetActive(false);
+        }
+        // 콤보 타이포 비활성화
+        if (comboTypo != null)
+        {
+            comboTypo.SetActive(false);
         }
 
         // 인덱스 초기화
@@ -273,6 +279,10 @@ public class FeverSystem : MonoBehaviour
             // 패널은 1초만 표시하고 숨기지만, 피버 상태는 계속 유지
             StartCoroutine(HideFeverPanel());
         }
+        if (comboTypo != null)
+        {
+            comboTypo.SetActive(true);
+        }
 
         // 피버 타임은 10초 동안 유지
         StartCoroutine(FeverTimer());
@@ -302,6 +312,10 @@ public class FeverSystem : MonoBehaviour
         if (feverPanel != null)
         {
             feverPanel.SetActive(false);
+        }
+        if (comboTypo != null)
+        {
+            comboTypo.SetActive(false);
         }
         ResetStreak();
     }
