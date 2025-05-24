@@ -270,7 +270,10 @@ public void SavePlayerNickname()
         Debug.LogWarning("닉네임이 비어있습니다.");
     }
 }
-
+public void OnClickNicknameConfirmButton()
+{
+    SavePlayerNickname(); // 꼭 호출
+}
 
 }
 

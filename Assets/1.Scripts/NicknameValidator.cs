@@ -9,9 +9,8 @@ public class NicknameValidator : MonoBehaviour
     public TMP_InputField nicknameInputField;
     public TMP_Text warningText;
     public Button confirmButton;
-    public GameObject popupPanel; // 팝업 전체 패널
+    public GameObject popupPanel;
 
-    // 예시: 이미 등록된 닉네임 목록
     private HashSet<string> usedNicknames = new HashSet<string>() { "Player1", "admin", "tester" };
 
     void Start()
@@ -39,6 +38,24 @@ public class NicknameValidator : MonoBehaviour
             return;
         }
 
+        // PlayerPrefs에서 랭킹 정보 불러와 중복 확인
+        if (PlayerPrefs.HasKey("Ranking"))
+        {
+            string json = PlayerPrefs.GetString("Ranking");
+            RankData data = JsonUtility.FromJson<RankData>(json);
+
+            foreach (var entry in data.ranks)
+            {
+                if (entry.nickname == input)
+                {
+                    warningText.text = "이미 사용 중인 닉네임입니다.";
+                    confirmButton.interactable = false;
+                    return;
+                }
+            }
+        }
+
+        // 하드코딩된 중복 닉네임 검사
         if (usedNicknames.Contains(input))
         {
             warningText.text = "이미 사용 중인 닉네임입니다.";
@@ -54,10 +71,9 @@ public class NicknameValidator : MonoBehaviour
         string nickname = nicknameInputField.text.Trim();
         Debug.Log("닉네임 저장됨: " + nickname);
 
-        // 저장 로직 여기에 추가
-        // usedNicknames.Add(nickname);
+        PlayerPrefs.SetString("PlayerNickname", nickname);
+        PlayerPrefs.Save();
 
-        // 팝업 닫기
         popupPanel.SetActive(false);
     }
 }

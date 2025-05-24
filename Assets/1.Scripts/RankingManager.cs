@@ -2,6 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
+
+
+
 [System.Serializable]
 public class RankEntry
 {
@@ -62,6 +65,10 @@ public class RankingManager : MonoBehaviour
             rankList = JsonUtility.FromJson<RankData>(json).ranks;
         }
     }
+public List<RankEntry> GetAllRanks()
+{
+    return rankList;
+}
 
 
 }
