@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -7,49 +7,48 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("Å¸ÀÌ¸Ó ¼³Á¤")]
-    public Slider timerSlider;          // Å¸ÀÌ¸Ó ½½¶óÀÌ´õ
-    public float gameTime = 120f;       // °ÔÀÓ ½Ã°£ (2ºĞ = 120ÃÊ)
-    private float timeRemaining;        // ³²Àº ½Ã°£
-    private bool isGameActive = false;  // °ÔÀÓ È°¼ºÈ­ »óÅÂ
+    [Header("íƒ€ì´ë¨¸ ì„¤ì •")]
+    public Slider timerSlider;          // íƒ€ì´ë¨¸ ìŠ¬ë¼ì´ë”
+    public float gameTime = 120f;       // ê²Œì„ ì‹œê°„ (2ë¶„ = 120ì´ˆ)
+    private float timeRemaining;        // ë‚¨ì€ ì‹œê°„
+    private bool isGameActive = false;  // ê²Œì„ í™œì„±í™” ìƒíƒœ
 
-    [Header("½ºÄÚ¾î ¼³Á¤")]
-    public Text scoreText;   // ½ºÄÚ¾î ÅØ½ºÆ®
-    private int currentScore = 0;       // ÇöÀç ½ºÄÚ¾î
+    [Header("ìŠ¤ì½”ì–´ ì„¤ì •")]
+    public Text scoreText;   // ìŠ¤ì½”ì–´ í…ìŠ¤íŠ¸
+    public TMP_Text finalScoreText; // ìµœì¢…ì ìˆ˜ í…ìŠ¤íŠ¸
+    private int currentScore = 0;       // í˜„ì¬ ìŠ¤ì½”ì–´
 
-    [Header("UI ÆĞ³Î")]
-    public GameObject gameOverPanel;    // °ÔÀÓ Á¾·á UI
+    [Header("UI íŒ¨ë„")]
+    public GameObject gameOverPanel;    // ê²Œì„ ì¢…ë£Œ UI
 
-    [Header("°ü·Ã ½Ã½ºÅÛ")]
-    public RecipeManager recipeManager; // ·¹½ÃÇÇ ¸Å´ÏÀú
-    public FeverSystem feverSystem;     // ÇÇ¹ö ½Ã½ºÅÛ
-    public RollDice diceRoller;         // ÁÖ»çÀ§ ½Ã½ºÅÛ
+    [Header("ê´€ë ¨ ì‹œìŠ¤í…œ")]
+    public RecipeManager recipeManager; // ë ˆì‹œí”¼ ë§¤ë‹ˆì €
+    public FeverSystem feverSystem;     // í”¼ë²„ ì‹œìŠ¤í…œ
+    public RollDice diceRoller;         // ì£¼ì‚¬ìœ„ ì‹œìŠ¤í…œ
 
-    [Header("º¸»ó/ÆĞ³ÎÆ¼ ¼³Á¤")]
-    // ÁÖ»çÀ§ ´«¿¡ µû¸¥ ¼º°ø ½Ã ½Ã°£ º¸»ó (ÀÎµ¦½º 0 = ´« 1)
+    [Header("ë³´ìƒ/íŒ¨ë„í‹° ì„¤ì •")]
+    // ì£¼ì‚¬ìœ„ ëˆˆì— ë”°ë¥¸ ì„±ê³µ ì‹œ ì‹œê°„ ë³´ìƒ (ì¸ë±ìŠ¤ 0 = ëˆˆ 1)
     private int[] timeRewardsByDice = { 3, 4, 6, 8, 10, 12 };
-    // ÁÖ»çÀ§ ´«¿¡ µû¸¥ ½ÇÆĞ ½Ã ½Ã°£ ÆĞ³ÎÆ¼
+    // ì£¼ì‚¬ìœ„ ëˆˆì— ë”°ë¥¸ ì‹¤íŒ¨ ì‹œ ì‹œê°„ íŒ¨ë„í‹°
     private int[] timePenaltiesByDice = { 2, 3, 4, 5, 6, 7 };
-    // ÁÖ»çÀ§ ´«¿¡ µû¸¥ ¼º°ø ½Ã Á¡¼ö º¸»ó
+    // ì£¼ì‚¬ìœ„ ëˆˆì— ë”°ë¥¸ ì„±ê³µ ì‹œ ì ìˆ˜ ë³´ìƒ
     private int[] scoreRewardsByDice = { 10, 20, 30, 40, 50, 60 };
-    // ÁÖ»çÀ§ ´«¿¡ µû¸¥ ½ÇÆĞ ½Ã Á¡¼ö ÆĞ³ÎÆ¼
+    // ì£¼ì‚¬ìœ„ ëˆˆì— ë”°ë¥¸ ì‹¤íŒ¨ ì‹œ ì ìˆ˜ íŒ¨ë„í‹°
     private int[] scorePenaltiesByDice = { 5, 10, 15, 20, 25, 30 };
 
-   [Header("´Ğ³×ÀÓ ÀúÀå")]
-    public TMP_InputField nicknameInputField; 
+    [Header("ë‹‰ë„¤ì„ ì €ì¥")]
+    public TMP_InputField nicknameInputField;
 
     void Start()
     {
-        // ÄÄÆ÷³ÍÆ® È®ÀÎ
+        // ì»´í¬ë„ŒíŠ¸ í™•ì¸
         if (timerSlider == null)
-            Debug.LogError("Å¸ÀÌ¸Ó ½½¶óÀÌ´õ°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+            Debug.LogError("íƒ€ì´ë¨¸ ìŠ¬ë¼ì´ë”ê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤!");
         if (scoreText == null)
-            Debug.LogError("½ºÄÚ¾î ÅØ½ºÆ®°¡ ÇÒ´çµÇÁö ¾Ê¾Ò½À´Ï´Ù!");
+            Debug.LogError("ìŠ¤ì½”ì–´ í…ìŠ¤íŠ¸ê°€ í• ë‹¹ë˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤!");
 
-        // °ÔÀÓ ½ÃÀÛ ¼³Á¤
+        // ê²Œì„ ì‹œì‘ ì„¤ì •
         InitializeGame();
-
-    
     }
 
     void Update()
@@ -58,45 +57,51 @@ public class GameManager : MonoBehaviour
         {
             UpdateTimer();
         }
-     
-    
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            EndGame();
+        }
     }
 
-    // °ÔÀÓ ÃÊ±âÈ­
+    // ê²Œì„ ì´ˆê¸°í™”
     public void InitializeGame()
     {
-        // Å¸ÀÌ¸Ó ÃÊ±âÈ­
+        // íƒ€ì´ë¨¸ ì´ˆê¸°í™”
         timeRemaining = gameTime;
         timerSlider.maxValue = gameTime;
         timerSlider.value = gameTime;
 
-        // ½ºÄÚ¾î ÃÊ±âÈ­
+        // ìŠ¤ì½”ì–´ ì´ˆê¸°í™”
         currentScore = 0;
         UpdateScoreDisplay();
 
-        // UI ÆĞ³Î ¼³Á¤
+        // UI íŒ¨ë„ ì„¤ì •
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
 
-        // °ÔÀÓ ½ÃÀÛ
+        // ê²Œì„ ì‹œì‘
         isGameActive = true;
 
-        // ÇÊ¿ä½Ã ¿¬°üµÈ ½Ã½ºÅÛµé ÃÊ±âÈ­
+        // í•„ìš”ì‹œ ì—°ê´€ëœ ì‹œìŠ¤í…œë“¤ ì´ˆê¸°í™”
         if (recipeManager != null)
-            Debug.Log("·¹½ÃÇÇ ¸Å´ÏÀú ÁØºñ ¿Ï·á");
+            Debug.Log("ë ˆì‹œí”¼ ë§¤ë‹ˆì € ì¤€ë¹„ ì™„ë£Œ");
         if (feverSystem != null)
-            Debug.Log("ÇÇ¹ö ½Ã½ºÅÛ ÁØºñ ¿Ï·á");
+            Debug.Log("í”¼ë²„ ì‹œìŠ¤í…œ ì¤€ë¹„ ì™„ë£Œ");
         if (diceRoller != null)
-            Debug.Log("ÁÖ»çÀ§ ½Ã½ºÅÛ ÁØºñ ¿Ï·á");
+            Debug.Log("ì£¼ì‚¬ìœ„ ì‹œìŠ¤í…œ ì¤€ë¹„ ì™„ë£Œ");
+
+        // ì‹œê°„ ì •ìƒí™”
+        Time.timeScale = 1f;
     }
 
-    // Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®
+    // íƒ€ì´ë¨¸ ì—…ë°ì´íŠ¸
     void UpdateTimer()
     {
-        // ÇÇ¹ö Å¸ÀÓ Áß¿£ Å¸ÀÌ¸Ó ¸ØÃã
+        // í”¼ë²„ íƒ€ì„ ì¤‘ì—” íƒ€ì´ë¨¸ ë©ˆì¶¤
         if (feverSystem != null && feverSystem.IsInFever())
         {
-            return; // ÇÇ¹ö Å¸ÀÓ Áß¿£ ½Ã°£ÀÌ Èå¸£Áö ¾Ê°Ô
+            return; // í”¼ë²„ íƒ€ì„ ì¤‘ì—” ì‹œê°„ì´ íë¥´ì§€ ì•Šê²Œ
         }
 
         if (timeRemaining > 0)
@@ -112,68 +117,61 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ½Ã°£ º¯°æ (¼º°ø/½ÇÆĞ¿¡ µû¸¥ º¸»ó/ÆĞ³ÎÆ¼)
+    // ì‹œê°„ ë³€ê²½ (ì„±ê³µ/ì‹¤íŒ¨ì— ë”°ë¥¸ ë³´ìƒ/íŒ¨ë„í‹°)
     public void ChangeTime(int diceValue, bool isSuccess)
     {
-        // ÇÇ¹ö Å¸ÀÓ Áß¿£ Å¸ÀÌ¸Ó ¸ØÃã
+        // í”¼ë²„ íƒ€ì„ ì¤‘ì—” íƒ€ì´ë¨¸ ë©ˆì¶¤
         if (feverSystem != null && feverSystem.IsInFever())
         {
-            return; // ÇÇ¹ö Å¸ÀÓ Áß¿£ ½Ã°£ÀÌ Èå¸£Áö ¾Ê°Ô
+            return; // í”¼ë²„ íƒ€ì„ ì¤‘ì—” ì‹œê°„ì´ íë¥´ì§€ ì•Šê²Œ
         }
 
-        // ¹è¿­ ÀÎµ¦½º´Â 0ºÎÅÍ ½ÃÀÛÇÏ¹Ç·Î º¸Á¤
+        // ë°°ì—´ ì¸ë±ìŠ¤ëŠ” 0ë¶€í„° ì‹œì‘í•˜ë¯€ë¡œ ë³´ì •
         int index = Mathf.Clamp(diceValue - 1, 0, 5);
 
         if (isSuccess)
         {
-            // ¼º°ø ½Ã - ½Ã°£ Ãß°¡
+            // ì„±ê³µ ì‹œ - ì‹œê°„ ì¶”ê°€
             int timeReward = timeRewardsByDice[index];
             timeRemaining += timeReward;
 
-            Debug.Log("¼º°ø! ½Ã°£ º¸»ó: +" + timeReward + "ÃÊ (ÇöÀç ½Ã°£: " + timeRemaining + ")");
+            Debug.Log("ì„±ê³µ! ì‹œê°„ ë³´ìƒ: +" + timeReward + "ì´ˆ (í˜„ì¬ ì‹œê°„: " + timeRemaining + ")");
         }
         else
         {
-            // ½ÇÆĞ ½Ã - ½Ã°£ Áï½Ã °¨¼Ò (ÆĞ³ÎÆ¼)
+            // ì‹¤íŒ¨ ì‹œ - ì‹œê°„ ì¦‰ì‹œ ê°ì†Œ (íŒ¨ë„í‹°)
             int timePenalty = timePenaltiesByDice[index];
 
-            // º¯°æ Àü °ª ÀúÀå
+            // ë³€ê²½ ì „ ê°’ ì €ì¥
             float beforeChange = timeRemaining;
 
-            // ½Ã°£ °¨¼Ò Àû¿ë
+            // ì‹œê°„ ê°ì†Œ ì ìš©
             timeRemaining -= timePenalty;
-            timeRemaining = Mathf.Max(0, timeRemaining); // À½¼ö ¹æÁö
+            timeRemaining = Mathf.Max(0, timeRemaining); // ìŒìˆ˜ ë°©ì§€
 
-            Debug.Log("½ÇÆĞ! ½Ã°£ ÆĞ³ÎÆ¼: -" + timePenalty + "ÃÊ (" + beforeChange + " ¡æ " + timeRemaining + ")");
+            Debug.Log("ì‹¤íŒ¨! ì‹œê°„ íŒ¨ë„í‹°: -" + timePenalty + "ì´ˆ (" + beforeChange + " â†’ " + timeRemaining + ")");
         }
 
-        // ½½¶óÀÌ´õ °­Á¦ ¾÷µ¥ÀÌÆ®
+        // ìŠ¬ë¼ì´ë” ê°•ì œ ì—…ë°ì´íŠ¸
         if (timerSlider != null)
         {
-            // ½½¶óÀÌ´õ °ªÀ» Áï½Ã ¾÷µ¥ÀÌÆ®
+            // ìŠ¬ë¼ì´ë” ê°’ì„ ì¦‰ì‹œ ì—…ë°ì´íŠ¸
             timerSlider.value = timeRemaining;
 
-            // UI Áï½Ã °»½ÅÀ» À§ÇÑ Ãß°¡ ÄÚµå
-            LayoutRebuilder.ForceRebuildLayoutImmediate((RectTransform)timerSlider.transform);
-
-            Debug.Log("Å¸ÀÌ¸Ó ½½¶óÀÌ´õ °ª ¼³Á¤: " + timerSlider.value);
-        }
-        else
-        {
-            Debug.LogError("Å¸ÀÌ¸Ó ½½¶óÀÌ´õ°¡ nullÀÔ´Ï´Ù!");
+            Debug.Log($"íƒ€ì´ë¨¸ ìŠ¬ë¼ì´ë” ê°’ ì„¤ì •: {timerSlider.value:F1}");
         }
 
-        // Time.timeScaleÀÌ 0ÀÎÁö È®ÀÎ (ÀÏ½ÃÁ¤Áö »óÅÂÀÎÁö)
-        if (Mathf.Approximately(Time.timeScale, 0f))
+        // ê²Œì„ ì¤‘ì§€ ìƒíƒœì¸ì§€ë¥¼ ì²´í¬í•˜ê¸° ìœ„í•œ
+        if (timeRemaining <= 0 && isGameActive)
         {
-            Debug.LogWarning("ÁÖÀÇ: Time.timeScaleÀÌ 0ÀÔ´Ï´Ù. Å¸ÀÌ¸Ó ¾÷µ¥ÀÌÆ®°¡ Á¦´ë·Î ÀÛµ¿ÇÏÁö ¾ÊÀ» ¼ö ÀÖ½À´Ï´Ù!");
+            EndGame();
         }
     }
 
-    // ½ºÄÚ¾î ¾÷µ¥ÀÌÆ® (¼º°ø/½ÇÆĞ¿¡ µû¸¥ º¸»ó/ÆĞ³ÎÆ¼)
+    // ìŠ¤ì½”ì–´ ì—…ë°ì´íŠ¸ (ì„±ê³µ/ì‹¤íŒ¨ì— ë”°ë¥¸ ë³´ìƒ/íŒ¨ë„í‹°)
     public void UpdateScore(int diceValue, bool isSuccess)
     {
-        // ¹è¿­ ÀÎµ¦½º´Â 0ºÎÅÍ ½ÃÀÛÇÏ¹Ç·Î º¸Á¤
+        // ë°°ì—´ ì¸ë±ìŠ¤ëŠ” 0ë¶€í„° ì‹œì‘í•˜ë¯€ë¡œ ë³´ì •
         int index = Mathf.Clamp(diceValue - 1, 0, 5);
 
         int scoreChange = 0;
@@ -186,17 +184,17 @@ public class GameManager : MonoBehaviour
             scoreChange = -scorePenaltiesByDice[index];
         }
 
-        // Á¡¼ö ¾÷µ¥ÀÌÆ® (ÃÖ¼Ò 0)
+        // ì ìˆ˜ ì—…ë°ì´íŠ¸ (ìµœì†Œ 0)
         currentScore = Mathf.Max(0, currentScore + scoreChange);
         UpdateScoreDisplay();
 
-        // Á¡¼ö º¯°æ ·Î±×
-        Debug.Log((isSuccess ? "¼º°ø" : "½ÇÆĞ") +
-                 $" - ÁÖ»çÀ§ {diceValue}: Á¡¼ö {(scoreChange >= 0 ? "+" : "")}{scoreChange}" +
-                 $" (ÇöÀç Á¡¼ö: {currentScore})");
+        // ì ìˆ˜ ë³€ê²½ ë¡œê·¸
+        Debug.Log((isSuccess ? "ì„±ê³µ" : "ì‹¤íŒ¨") +
+                 $" - ì£¼ì‚¬ìœ„ {diceValue}: ì ìˆ˜ {(scoreChange >= 0 ? "+" : "")}{scoreChange}" +
+                 $" (í˜„ì¬ ì ìˆ˜: {currentScore})");
     }
 
-    // ½ºÄÚ¾î Ç¥½Ã ¾÷µ¥ÀÌÆ®
+    // ìŠ¤ì½”ì–´ í‘œì‹œ ì—…ë°ì´íŠ¸
     void UpdateScoreDisplay()
     {
         if (scoreText != null)
@@ -205,73 +203,100 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    // ÇÜ¹ö°Å ¿Ï¼º/½ÇÆĞ Ã³¸®
+    // í–„ë²„ê±° ì™„ì„±/ì‹¤íŒ¨ ì²˜ë¦¬
     public void OnBurgerResult(int diceValue, bool isSuccess)
     {
-        // Á¡¼ö ¾÷µ¥ÀÌÆ®
+        // ì ìˆ˜ ì—…ë°ì´íŠ¸
         UpdateScore(diceValue, isSuccess);
 
-        // ½Ã°£ º¯°æ
+        // ì‹œê°„ ë³€ê²½
         ChangeTime(diceValue, isSuccess);
     }
 
-    // °ÔÀÓ Á¾·á
+    // ê²Œì„ ì¢…ë£Œ
     void EndGame()
     {
         if (!isGameActive)
             return;
 
         isGameActive = false;
-       
-         // ÇöÀç Á¡¼ö¸¦ ScoreManager¿¡ ÀúÀå
-    ScoreManager.Instance.currentScore = currentScore;
-    // ·©Å· ´Ğ³×ÀÓ ÀúÀå
-    string nickname = PlayerPrefs.GetString("PlayerNickname", "Unknown");
-    
-    RankingManager.Instance.AddRank(nickname, currentScore);
 
-        Debug.Log("°ÔÀÓ Á¾·á! ÃÖÁ¾ ½ºÄÚ¾î: " + currentScore);
+        // í˜„ì¬ ì ìˆ˜ë¥¼ ScoreManagerì— ì €ì¥
+        if (ScoreManager.Instance != null)
+        {
+            ScoreManager.Instance.currentScore = currentScore;
+        }
 
-        // °ÔÀÓ ¿À¹ö ÆĞ³Î È°¼ºÈ­
+        // ë‹‰ë„¤ì„ ê°€ì ¸ì˜¤ê¸°
+        string nickname = GetPlayerNickname();
+
+        // ë­í‚¹ì— ì¶”ê°€
+        if (RankingManager.Instance != null)
+        {
+            RankingManager.Instance.AddRank(nickname, currentScore);
+            Debug.Log($"ë­í‚¹ ì¶”ê°€: {nickname} - {currentScore}ì ");
+        }
+
+        Debug.Log("ê²Œì„ ì¢…ë£Œ! ìµœì¢… ìŠ¤ì½”ì–´: " + currentScore);
+
+        // ê²Œì„ ì˜¤ë²„ íŒ¨ë„ í™œì„±í™”
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
-           
+
+            if (finalScoreText != null)
+                finalScoreText.text = "ìµœì¢…ì ìˆ˜: " + currentScore.ToString();
         }
-
-        // °ÔÀÓ ÀÏ½ÃÁ¤Áö (¼±ÅÃ »çÇ×)
-        Time.timeScale = 1;
-
-     
     }
 
-    // Àç½ÃÀÛ ¹öÆ° (°ÔÀÓ ¿À¹ö ÆĞ³Î¿¡¼­ »ç¿ë)
+    // ì¬ì‹œì‘ ë²„íŠ¼ (ê²Œì„ ì˜¤ë²„ íŒ¨ë„ì—ì„œ ì‚¬ìš©)
     public void RestartGame()
     {
-        // °ÔÀÓ ½Ã°£ º¹¿ø
+        // ê²Œì„ ì‹œê°„ ë³µì›
         Time.timeScale = 1;
 
-        // °ÔÀÓ ´Ù½Ã ÃÊ±âÈ­
+        // ê²Œì„ ë‹¤ì‹œ ì´ˆê¸°í™”
         InitializeGame();
     }
-  
 
-public void SavePlayerNickname()
-{
-    string playerNickname = nicknameInputField.text;
-    if (!string.IsNullOrEmpty(playerNickname))
+    private string GetPlayerNickname()
     {
-        PlayerPrefs.SetString("PlayerNickname", playerNickname);
-        PlayerPrefs.Save();
-        Debug.Log("´Ğ³×ÀÓ ÀúÀå ¿Ï·á: " + playerNickname);
+        // InputFieldì—ì„œ 1ì°¨ í™•ì¸
+        if (nicknameInputField != null && !string.IsNullOrEmpty(nicknameInputField.text))
+        {
+            return nicknameInputField.text.Trim();
+        }
+
+        // PlayerPrefsì—ì„œ 2ì°¨ í™•ì¸
+        string savedNickname = PlayerPrefs.GetString("PlayerNickname", "");
+        if (!string.IsNullOrEmpty(savedNickname))
+        {
+            return savedNickname;
+        }
+
+        // ì•„ë¬´ê²ƒë„ ì…ë ¥í•˜ì§€ ì•Šì•˜ì„ë•Œ ê¸°ë³¸ê°’
+        return "Unknown";
     }
-    else
+
+    public void SavePlayerNickname()
     {
-        Debug.LogWarning("´Ğ³×ÀÓÀÌ ºñ¾îÀÖ½À´Ï´Ù.");
+        if (nicknameInputField == null)
+        {
+            return;
+        }
+
+        string playerNickname = nicknameInputField.text.Trim();
+        if (!string.IsNullOrEmpty(playerNickname))
+        {
+            PlayerPrefs.SetString("PlayerNickname", playerNickname);
+            PlayerPrefs.Save();
+            Debug.Log("ë‹‰ë„¤ì„ ì €ì¥ ì™„ë£Œ: " + playerNickname);
+        }
+        else
+        {
+            Debug.LogWarning("ë‹‰ë„¤ì„ì´ ë¹„ì–´ìˆìŠµë‹ˆë‹¤.");
+        }
     }
-}
-
-
 }
 
 

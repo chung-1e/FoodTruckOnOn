@@ -8,11 +8,11 @@ public class RankItem : MonoBehaviour
     public TextMeshProUGUI scoreText;
 
     public void SetData(int rank, string nickname, int score)
-{
-Debug.Log($"[SetData] rank={rank}, nickname='{nickname}', score={score}");
+    {
+        Debug.Log($"[SetData] rank={rank}, nickname='{nickname}', score={score}");
 
-    rankText.text = $"{rank}위";
-    nicknameText.text = nickname;
-    scoreText.text = $"{score}점";
-}
+        rankText.text = $"{rank}위";
+        nicknameText.text = nickname;
+        scoreText.text = $"{score}점";
+    }
 }
