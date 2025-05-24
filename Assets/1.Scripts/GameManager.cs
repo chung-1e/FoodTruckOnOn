@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviour
 
     [Header("스코어 설정")]
     public Text scoreText;   // 스코어 텍스트
-    public Text finalScoreText; // 최종 스코어 텍스트 (게임 종료 시)
     private int currentScore = 0;       // 현재 스코어
 
     [Header("UI 패널")]
@@ -35,6 +34,9 @@ public class GameManager : MonoBehaviour
     private int[] scoreRewardsByDice = { 10, 20, 30, 40, 50, 60 };
     // 주사위 눈에 따른 실패 시 점수 패널티
     private int[] scorePenaltiesByDice = { 5, 10, 15, 20, 25, 30 };
+
+   [Header("닉네임 저장")]
+    public TMP_InputField nicknameInputField; 
 
     void Start()
     {
@@ -234,15 +236,13 @@ public class GameManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
-            if (finalScoreText != null)
-                finalScoreText.text = "게임 종료!\n최종 점수: " + currentScore.ToString();
+           
         }
 
         // 게임 일시정지 (선택 사항)
         Time.timeScale = 1;
 
-        // Exit 씬으로 전환
-     SceneManager.LoadScene("Exit");
+     
     }
 
     // 재시작 버튼 (게임 오버 패널에서 사용)
@@ -254,7 +254,7 @@ public class GameManager : MonoBehaviour
         // 게임 다시 초기화
         InitializeGame();
     }
-public TMP_InputField nicknameInputField;  
+  
 
 public void SavePlayerNickname()
 {
@@ -270,10 +270,7 @@ public void SavePlayerNickname()
         Debug.LogWarning("닉네임이 비어있습니다.");
     }
 }
-public void OnClickNicknameConfirmButton()
-{
-    SavePlayerNickname(); // 꼭 호출
-}
+
 
 }
 
