@@ -20,9 +20,12 @@ public class GameManager : MonoBehaviour
 
     [Header("UI 패널")]
     public GameObject gameOverPanel;    // 게임 종료 UI
-
+    public Button rankingSubmitButton; // 랭킹 등록 버튼
+    private bool isRankingSubmitted = false;  //랭킹 등록 여부
+    
+    
     [Header("관련 시스템")]
-    public RecipeManager recipeManager; // 레시피 매니저
+    public RecipeManager recipeManager;  // 레시피 매니저
     public FeverSystem feverSystem;     // 피버 시스템
     public RollDice diceRoller;         // 주사위 시스템
 
@@ -75,7 +78,13 @@ public class GameManager : MonoBehaviour
         // 스코어 초기화
         currentScore = 0;
         UpdateScoreDisplay();
-
+       
+        // 닉네임 InputField 초기화
+        if (nicknameInputField != null)
+        {
+            nicknameInputField.text = "";
+        }
+        
         // UI 패널 설정
         if (gameOverPanel != null)
             gameOverPanel.SetActive(false);
@@ -220,25 +229,17 @@ public class GameManager : MonoBehaviour
             return;
 
         isGameActive = false;
-
+        isRankingSubmitted = false;
+       
+        Debug.Log("게임 종료! 최종 스코어: " + currentScore);
+        
         // 현재 점수를 ScoreManager에 저장
         if (ScoreManager.Instance != null)
         {
             ScoreManager.Instance.currentScore = currentScore;
         }
 
-        // 닉네임 가져오기
-        string nickname = GetPlayerNickname();
-
-        // 랭킹에 추가
-        if (RankingManager.Instance != null)
-        {
-            RankingManager.Instance.AddRank(nickname, currentScore);
-            Debug.Log($"랭킹 추가: {nickname} - {currentScore}점");
-        }
-
-        Debug.Log("게임 종료! 최종 스코어: " + currentScore);
-
+        
         // 게임 오버 패널 활성화
         if (gameOverPanel != null)
         {
@@ -248,7 +249,46 @@ public class GameManager : MonoBehaviour
                 finalScoreText.text = "최종점수: " + currentScore.ToString();
         }
     }
+    
+   
+    //랭킹 등록 버튼 클릭 시 호출되는 매서드
+    public void SubmitRanking()
+    {
+        if (isRankingSubmitted)
+        {
+            return;
+        }
+    
+    
+        // 닉네임 저장
+         SavePlayerNickname();
 
+         // 닉네임 가져오기
+         string nickname = "";
+    
+         if (nicknameInputField != null)
+         {
+            nickname = nicknameInputField.text.Trim();
+         }
+
+         if(string.IsNullOrEmpty(nickname) || string.IsNullOrWhiteSpace(nickname))
+         {
+           nickname = "Unknown";
+         }
+        // 랭킹 등록
+        if (RankingManager.Instance != null)
+       {
+            RankingManager.Instance.AddRank(nickname, currentScore);
+
+             isRankingSubmitted = true;
+
+            //중복 등록 방지를 위해 버튼 비활성화
+            if (rankingSubmitButton != null)
+            {
+                rankingSubmitButton.interactable = false;
+            }
+       }   
+    }
     // 재시작 버튼 (게임 오버 패널에서 사용)
     public void RestartGame()
     {
