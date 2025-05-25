@@ -36,7 +36,7 @@ public class RankingPopup : MonoBehaviour
             RankItem item = go.GetComponent<RankItem>();
             if (item != null)
             {
-                item.SetData(i + 1, ranks[i].nickname, ranks[i].score);
+                item.SetData(i + 1, ranks[i].nickname, ranks[i].playTime, ranks[i].score);
             }
             else
             {

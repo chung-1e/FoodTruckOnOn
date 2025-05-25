@@ -1186,6 +1186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentScore: 0
+  playTime: 0
 --- !u!4 &335013858
 Transform:
   m_ObjectHideFlags: 0
@@ -2680,7 +2681,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05381c1e110487b49bf174b510328bd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 4
   ingredientHoldHeight: 2.25
   ingredientHoldOffset: {x: 0, y: 0, z: 0}
 --- !u!50 &797009614
@@ -3654,6 +3655,7 @@ MonoBehaviour:
   scoreText: {fileID: 1307249524}
   finalScoreText: {fileID: 1907902479}
   gameOverPanel: {fileID: 903109480}
+  rankingSubmitButton: {fileID: 0}
   recipeManager: {fileID: 1806285201}
   feverSystem: {fileID: 1498012826}
   diceRoller: {fileID: 182315805}

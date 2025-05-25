@@ -3,6 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class NicknameValidator : MonoBehaviour
 {
@@ -11,6 +12,8 @@ public class NicknameValidator : MonoBehaviour
     public Button confirmButton;
     public GameObject popupPanel;
 
+
+    
     private HashSet<string> usedNicknames = new HashSet<string>() { "Player1", "admin", "tester" };
 
     void Start()
@@ -38,13 +41,12 @@ public class NicknameValidator : MonoBehaviour
             return;
         }
 
-        // PlayerPrefs에서 랭킹 정보 불러와 중복 확인
-        if (PlayerPrefs.HasKey("Ranking"))
+        // rankingManager에서 랭킹 정보 불러와 중복 확인
+        if (RankingManager.Instance != null)
         {
-            string json = PlayerPrefs.GetString("Ranking");
-            RankData data = JsonUtility.FromJson<RankData>(json);
+           var ranks = RankingManager.Instance.GetAllRanks();
 
-            foreach (var entry in data.ranks)
+            foreach (var entry in ranks)
             {
                 if (entry.nickname == input)
                 {
@@ -73,7 +75,18 @@ public class NicknameValidator : MonoBehaviour
 
         PlayerPrefs.SetString("PlayerNickname", nickname);
         PlayerPrefs.Save();
+    
+      //랭킹에 등록 (ScoreManager에서 점수와 플레이 시간 가져오기)
+      if (RankingManager.Instance != null && ScoreManager.Instance != null)
+      {
+          RankingManager.Instance.AddRank(nickname,
+          ScoreManager.Instance.currentScore, ScoreManager.Instance.playTime);
+      }
+      
+      //랭킹 씬으로 이동
+      SceneManager.LoadScene("MapScene");
 
-        popupPanel.SetActive(false);
     }
+    
+
 }

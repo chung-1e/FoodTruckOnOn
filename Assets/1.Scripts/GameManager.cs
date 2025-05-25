@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public Slider timerSlider;          // 타이머 슬라이더
     public float gameTime = 120f;       // 게임 시간 (2분 = 120초)
     private float timeRemaining;        // 남은 시간
+    private float playTime = 0f;        //플레이 시간
     private bool isGameActive = false;  // 게임 활성화 상태
 
     [Header("스코어 설정")]
@@ -59,12 +60,9 @@ public class GameManager : MonoBehaviour
         if (isGameActive)
         {
             UpdateTimer();
+            UpdatePlayTime();
         }
 
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            EndGame();
-        }
     }
 
     // 게임 초기화
@@ -75,6 +73,8 @@ public class GameManager : MonoBehaviour
         timerSlider.maxValue = gameTime;
         timerSlider.value = gameTime;
 
+        playTime = 0f;
+        
         // 스코어 초기화
         currentScore = 0;
         UpdateScoreDisplay();
@@ -124,6 +124,16 @@ public class GameManager : MonoBehaviour
             timerSlider.value = 0;
             EndGame();
         }
+    }
+
+    void UpdatePlayTime()
+    {
+        playTime += Time.deltaTime;
+    }
+
+    public float GetPlayTime()
+    {
+        return playTime;
     }
 
     // 시간 변경 (성공/실패에 따른 보상/패널티)
@@ -237,6 +247,7 @@ public class GameManager : MonoBehaviour
         if (ScoreManager.Instance != null)
         {
             ScoreManager.Instance.currentScore = currentScore;
+            ScoreManager.Instance.playTime = playTime;
         }
 
         
@@ -275,19 +286,24 @@ public class GameManager : MonoBehaviour
          {
            nickname = "Unknown";
          }
-        // 랭킹 등록
-        if (RankingManager.Instance != null)
-       {
-            RankingManager.Instance.AddRank(nickname, currentScore);
+          
+         if (nicknameInputField != null && !string.IsNullOrEmpty
+                (nicknameInputField.text.Trim()))
+                {
+                    PlayerPrefs.SetString("playerNickname", nickname);
+                    PlayerPrefs.Save();
+                }
 
-             isRankingSubmitted = true;
+        //랭킹 등록은 NicknameValidator에서만 처리하도록 제거
+         isRankingSubmitted = true;
 
             //중복 등록 방지를 위해 버튼 비활성화
             if (rankingSubmitButton != null)
             {
                 rankingSubmitButton.interactable = false;
             }
-       }   
+        
+         
     }
     // 재시작 버튼 (게임 오버 패널에서 사용)
     public void RestartGame()

@@ -4,6 +4,7 @@ public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance;
     public int currentScore = 0;
+    public float playTime = 0f;
 
     void Awake()
     {
@@ -26,5 +27,6 @@ public class ScoreManager : MonoBehaviour
     public void ResetScore()
     {
         currentScore = 0;
+        playTime = 0f;
     }
 }

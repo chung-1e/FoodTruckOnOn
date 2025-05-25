@@ -8,6 +8,7 @@ public class RankEntry
 {
     public string nickname;
     public int score;
+    public float playTime; // 플레이 시간 추가
 }
 
 [System.Serializable]
@@ -43,7 +44,7 @@ public class RankingManager : MonoBehaviour
         }
     }
 
-    public void AddRank(string nickname, int score)
+    public void AddRank(string nickname, int score, float playTime)
     {
         try
         {
@@ -57,7 +58,8 @@ public class RankingManager : MonoBehaviour
             RankEntry entry = new RankEntry
             {
                 nickname = nickname.Trim(),
-                score = score
+                score = score,
+                playTime = playTime 
             };
 
             // 랭킹 리스트 추가

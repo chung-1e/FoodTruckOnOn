@@ -8,19 +8,20 @@ public class UIManager : MonoBehaviour
 {
     [Header("버튼 설정")]
     [SerializeField] private Button startButton;
-    [SerializeField] private Button SettingButton;
     [SerializeField] private Button ExitButton;
-    [SerializeField] private Button businessStartButton;
+    [SerializeField] private Button SettingButton;
 
     [Header("씬 이름")]
     [SerializeField] private string gameSceneName = "MapScene";
-    [SerializeField] private string test = "Setting";
     [SerializeField] private string test1 = "Exit";
-    [SerializeField] private string test2 = "IngameSceme";
+   
     
     [Header("랭킹 UI")]
     [SerializeField] private GameObject rankingPopup;
 
+    [Header("소리설정")]
+    [SerializeField] private GameObject settingPopup;
+   
     void Awake()
     {
         if (startButton == null)
@@ -32,11 +33,6 @@ public class UIManager : MonoBehaviour
     public void StartGame()
     {
         SceneManager.LoadScene(gameSceneName);
-    }
-
-    public void Setting()
-    {
-        SceneManager.LoadScene(test);
     }
 
     public void Exit()
@@ -55,9 +51,17 @@ public class UIManager : MonoBehaviour
         if (rankingPopup != null)
             rankingPopup.SetActive(false);
     }
-public void OnBusinessStart()
-{
-    SceneManager.LoadScene(test2);
-}
+
+    public void OpenSettingPopup()
+    {
+         if (settingPopup != null)
+            settingPopup.SetActive(true);
+    }
+     public void CloseSettingPopup()
+    {
+        if (settingPopup != null)
+            settingPopup.SetActive(false);
+    }
+
 
 }
