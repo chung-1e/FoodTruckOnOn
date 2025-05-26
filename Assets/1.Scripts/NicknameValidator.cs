@@ -70,6 +70,7 @@ public class NicknameValidator : MonoBehaviour
 
     void OnConfirm()
     {
+         AudioManager.Instance.PlaySFX("마우스 클릭"); 
         string nickname = nicknameInputField.text.Trim();
         Debug.Log("닉네임 저장됨: " + nickname);
 

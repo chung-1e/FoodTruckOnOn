@@ -338,6 +338,10 @@ public class RecipeManager : MonoBehaviour
             completedBurger = Instantiate(cookingStation.hamburgerPrefab, burgerPosition, Quaternion.identity);
             completedBurger.name = "완성된 햄버거";
             isBurgerCompleted = true;
+        
+        // 효과음 재생
+        AudioManager.Instance.PlaySFX("햄버거 완성");
+        
         }
         else
         {

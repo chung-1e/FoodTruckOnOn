@@ -36,19 +36,32 @@ public class MapCarousel : MonoBehaviour
     private Vector2 sideSize = new Vector2(480, 480);
     private bool isAnimating = false; // 애니메이션 중 중복 입력 방지
 
-    void Start()
+   void Start()
+{
+    leftButton.onClick.AddListener(() => {
+        AudioManager.Instance.PlaySFX("마우스 클릭");
+        ChangeMap(-1);
+    });
+
+    rightButton.onClick.AddListener(() => {
+        AudioManager.Instance.PlaySFX("마우스 클릭");
+        ChangeMap(1);
+    });
+
+    startButton.onClick.AddListener(() => {
+    AudioManager.Instance.PlaySFX("마우스 클릭");
+    OnStartButtonClicked();
+    });
+
+    foreach (Sprite sprite in mapSprites)
     {
-        leftButton.onClick.AddListener(() => ChangeMap(-1));
-        rightButton.onClick.AddListener(() => ChangeMap(1));
-        startButton.onClick.AddListener(OnStartButtonClicked);
-
-        foreach (Sprite sprite in mapSprites)
-        {
-            CreateMap(sprite);
-        }
-
-        UpdateMapDisplay();
+        CreateMap(sprite);
     }
+
+    UpdateMapDisplay();
+}
+
+
 
     void CreateMap(Sprite sprite)
     {
@@ -277,6 +290,7 @@ void SetButtonsInteractable(bool interactable)
 
 void OnStartButtonClicked()
 {
+    
     if (isAnimating) return; // 애니메이션 중이면 무시
 
     if (mapUnlocked.Length > currentIndex && mapUnlocked[currentIndex])

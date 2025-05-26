@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviour
     private float playTime = 0f;        //플레이 시간
     private bool isGameActive = false;  // 게임 활성화 상태
 
+    [Header("카운트다운")]
+    public GameObject countdownPanel;     // 카운트다운 보여줄 패널
+    public TMP_Text countdownText;        // 숫자 텍스트 
+    public string countdownSFXName = "카운트다운";
+
     [Header("스코어 설정")]
     public Text scoreText;   // 스코어 텍스트
     public TMP_Text finalScoreText; // 최종점수 텍스트
@@ -43,6 +48,12 @@ public class GameManager : MonoBehaviour
     [Header("닉네임 저장")]
     public TMP_InputField nicknameInputField;
 
+    [Header("시간 경고 사운드")]
+    public string timeWarningSFXName = "시간 임박";  
+
+    private bool isTimeWarningPlayed = false; 
+
+     private Coroutine countdownCoroutine;
     void Start()
     {
         // 컴포넌트 확인
@@ -53,6 +64,9 @@ public class GameManager : MonoBehaviour
 
         // 게임 시작 설정
         InitializeGame();
+
+  if (countdownCoroutine == null)
+        countdownCoroutine = StartCoroutine(StartCountdown());
     }
 
     void Update()
@@ -90,7 +104,7 @@ public class GameManager : MonoBehaviour
             gameOverPanel.SetActive(false);
 
         // 게임 시작
-        isGameActive = true;
+        isGameActive = false;
 
         // 필요시 연관된 시스템들 초기화
         if (recipeManager != null)
@@ -102,29 +116,47 @@ public class GameManager : MonoBehaviour
 
         // 시간 정상화
         Time.timeScale = 1f;
+
+         isTimeWarningPlayed = false; // 초기화 시점에 false로
     }
 
     // 타이머 업데이트
     void UpdateTimer()
+{
+    // 피버 타임 중엔 타이머 멈춤
+    if (feverSystem != null && feverSystem.IsInFever())
     {
-        // 피버 타임 중엔 타이머 멈춤
-        if (feverSystem != null && feverSystem.IsInFever())
-        {
-            return; // 피버 타임 중엔 시간이 흐르지 않게
-        }
+        return;
+    }
 
-        if (timeRemaining > 0)
+    if (timeRemaining > 0)
+    {
+        timeRemaining -= Time.deltaTime;
+        timerSlider.value = timeRemaining;
+
+        // 시간 임박 사운드 체크
+        if (timeRemaining <= 5f)
         {
-            timeRemaining -= Time.deltaTime;
-            timerSlider.value = timeRemaining;
+            if (!isTimeWarningPlayed)
+            {
+                AudioManager.Instance.PlaySFX(timeWarningSFXName);
+                isTimeWarningPlayed = true;
+            }
         }
         else
         {
-            timeRemaining = 0;
-            timerSlider.value = 0;
-            EndGame();
+            // 5초 이상이면 플래그 리셋
+            isTimeWarningPlayed = false;
         }
     }
+    else
+    {
+        timeRemaining = 0;
+        timerSlider.value = 0;
+        EndGame();
+    }
+}
+
 
     void UpdatePlayTime()
     {
@@ -353,6 +385,38 @@ public class GameManager : MonoBehaviour
             Debug.LogWarning("닉네임이 비어있습니다.");
         }
     }
+
+private IEnumerator StartCountdown()
+{
+    if (countdownPanel != null) countdownPanel.SetActive(true);
+
+    int count = 3;
+    while (count > 0)
+    {
+        if (countdownText != null)
+            countdownText.text = count.ToString();
+
+        AudioManager.Instance.PlaySFX(countdownSFXName);
+
+        yield return new WaitForSeconds(1f);
+        count--;
+    }
+
+    if (countdownText != null)
+        countdownText.text = "시작!";
+
+    yield return new WaitForSeconds(1f);
+
+    if (countdownPanel != null)
+        countdownPanel.SetActive(false);
+
+    isGameActive = true;
+
+    //  카운트다운 끝난 후 주사위 굴림 실행
+    if (diceRoller != null)
+        diceRoller.Rolling();
+}
+
 }
 
 

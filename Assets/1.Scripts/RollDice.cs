@@ -59,8 +59,7 @@ public class RollDice : MonoBehaviour
             feverSystem = FindObjectOfType<FeverSystem>();
         }
 
-        // 게임 시작 시 첫 번째 주사위 굴리기
-        Rolling();
+        
     }
 
     public void Rolling()

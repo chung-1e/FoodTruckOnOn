@@ -30,38 +30,46 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void StartGame()
-    {
-        SceneManager.LoadScene(gameSceneName);
-    }
+   public void StartGame()
+{
+    AudioManager.Instance.PlaySFX("마우스 클릭"); 
+    SceneManager.LoadScene(gameSceneName);
+}
 
-    public void Exit()
-    {
-        SceneManager.LoadScene(test1);
-    }
+public void Exit()
+{
+    AudioManager.Instance.PlaySFX("마우스 클릭");  
+    SceneManager.LoadScene(test1);
+}
 
-    public void OpenRankingPopup()
-    {
-        if (rankingPopup != null)
-            rankingPopup.SetActive(true);
-    }
+public void OpenRankingPopup()
+{
+    AudioManager.Instance.PlaySFX("마우스 클릭"); 
+    if (rankingPopup != null)
+        rankingPopup.SetActive(true);
+}
 
-    public void CloseRankingPopup()
-    {
-        if (rankingPopup != null)
-            rankingPopup.SetActive(false);
-    }
+public void CloseRankingPopup()
+{
+    AudioManager.Instance.PlaySFX("마우스 클릭"); 
+    if (rankingPopup != null)
+        rankingPopup.SetActive(false);
+}
 
-    public void OpenSettingPopup()
-    {
-         if (settingPopup != null)
-            settingPopup.SetActive(true);
-    }
-     public void CloseSettingPopup()
-    {
-        if (settingPopup != null)
-            settingPopup.SetActive(false);
-    }
+public void OpenSettingPopup()
+{
+    AudioManager.Instance.PlaySFX("마우스 클릭"); 
+    if (settingPopup != null)
+        settingPopup.SetActive(true);
+}
+
+public void CloseSettingPopup()
+{
+    AudioManager.Instance.PlaySFX("마우스 클릭"); 
+    if (settingPopup != null)
+        settingPopup.SetActive(false);
+}
+
 
 
 }

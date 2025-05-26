@@ -268,6 +268,12 @@ public class FeverSystem : MonoBehaviour
         isInFever = true;
         Debug.Log("피버 타임 시작!");
 
+         // 피버타임 BGM 재생 요청
+    if (AudioManager.Instance != null)
+    {
+        AudioManager.Instance.StartFeverTime();
+    }
+  
         if (feverPanel != null)
         {
             feverPanel.SetActive(true);
@@ -300,6 +306,13 @@ public class FeverSystem : MonoBehaviour
     private void EndFever()
     {
         isInFever = false;
+      
+        // 피버타임 BGM 종료 요청 및 원래 음악으로 복귀
+    if (AudioManager.Instance != null)
+    {
+        AudioManager.Instance.EndFeverTime();
+    }
+        
         if (feverPanel != null)
         {
             feverPanel.SetActive(false);
