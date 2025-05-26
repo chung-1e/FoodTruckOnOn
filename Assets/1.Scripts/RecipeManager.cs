@@ -316,7 +316,7 @@ public class RecipeManager : MonoBehaviour
         Debug.Log("CreateCompletedBuger 호출됨");
 
         // 조리대 위 모든 재료 제거
-        cookingStation.ClearAllFoods();
+        cookingStation.ClearBurgerIngredients();
 
         // 피버 타임 중인지 확인
         bool isInFever = false;
@@ -356,7 +356,8 @@ public class RecipeManager : MonoBehaviour
         // 새로운 레시피가 생성될 때 이전 햄버거 제거
         if (completedBurger != null)
         {
-            Destroy(completedBurger);
+            Destroy(completedBurger);            // 완성품 제거
+            cookingStation.ClearAllFoods();     // 사이드(일반 재료 포함) 제거
             completedBurger = null;
             isBurgerCompleted = false;
             Debug.Log("이전 햄버거가 제거되었습니다.");

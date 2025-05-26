@@ -10,8 +10,8 @@ public class FeverSystem : MonoBehaviour
     public Image[] streakImages;  // 5개의 이미지 배열 (0이 아래, 4가 위)
     public GameObject feverPanel;   // 피버 타임 패널
 
-    [Header("이미지 스트라이트")]
-    public Sprite[] grayscaleSprites;  // 서로 다른 5개의 흑백 이미지
+    [Header("콤보 이미지")]
+    public GameObject[] deactivationCombo;  // 콤보게이지 비활성화 용
     public Sprite[] colorSprites;  // 서로 다른 5개의 컬러 이미지
 
     [Header("피버 타임 설정")]
@@ -225,10 +225,10 @@ public class FeverSystem : MonoBehaviour
             return;
         }
 
-        if (grayscaleSprites == null || grayscaleSprites.Length == 0 ||
+        if (deactivationCombo == null || deactivationCombo.Length == 0 ||
             colorSprites == null || colorSprites.Length == 0)
         {
-            Debug.LogError("스프라이트 배열이 없거나 비어있습니다!");
+            Debug.LogError("오브젝트 배열이 없거나 비어있습니다!");
             return;
         }
 
@@ -246,15 +246,16 @@ public class FeverSystem : MonoBehaviour
             {
                 if (i < colorSprites.Length)
                 {
+                    deactivationCombo[i].SetActive(true);
                     streakImages[i].sprite = colorSprites[i];
                     Debug.Log($"이미지 {i}: 컬러 이미지로 설정");
                 }
             }
             else
             {
-                if (i < grayscaleSprites.Length)
+                if (i < deactivationCombo.Length)
                 {
-                    streakImages[i].sprite = grayscaleSprites[i];
+                    deactivationCombo[i].SetActive(false);
                     Debug.Log($"이미지 {i}: 흑백 이미지로 설정");
                 }
             }
