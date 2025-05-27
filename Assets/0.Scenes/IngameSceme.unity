@@ -2331,9 +2331,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.4732, y: -14.415}
-  m_SizeDelta: {x: 306.0156, y: 242.1873}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 42, y: -12}
+  m_SizeDelta: {x: 299.9149, y: 221.8516}
+  m_Pivot: {x: 0.5000002, y: 1.4533014}
 --- !u!222 &665635449
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2362,7 +2362,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: New Text
+  m_text: "\uC2DC\uC791!"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ee8966cac90a6543b86666bb3fc3516, type: 2}
   m_sharedMaterial: {fileID: 43227885846879644, guid: 7ee8966cac90a6543b86666bb3fc3516, type: 2}
@@ -2425,7 +2425,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -175.76361, z: -376.2766, w: 0}
+  m_margin: {x: 0, y: -175.76361, z: -0.06604004, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

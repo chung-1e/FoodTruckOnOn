@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.Audio;
 
 public class AudioManager : MonoBehaviour
 {
@@ -10,6 +11,9 @@ public class AudioManager : MonoBehaviour
     public AudioSource musicSource, sfxSource;
 
     private string currentMusicName = "";
+
+     public AudioMixer audioMixer; 
+
 
     private void Awake()
     {
@@ -30,6 +34,10 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         PlaySceneMusic(SceneManager.GetActiveScene().name);
+
+        // 저장된 값 불러오기
+        float savedVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        SetMasterVolume(savedVolume);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -126,5 +134,13 @@ public class AudioManager : MonoBehaviour
         PlaySceneMusic(currentScene);
     }
 
+    
 
+
+      public void SetMasterVolume(float value)
+    {
+        audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20f);
+    }
+
+    
 }
