@@ -2819,6 +2819,7 @@ MonoBehaviour:
   moveSpeed: 4
   ingredientHoldHeight: 2.25
   ingredientHoldOffset: {x: 0, y: 0, z: 0}
+  countdownPanel: {fileID: 942037068}
 --- !u!50 &797009614
 Rigidbody2D:
   serializedVersion: 4
@@ -3866,7 +3867,6 @@ MonoBehaviour:
   gameTime: 120
   countdownPanel: {fileID: 942037068}
   countdownText: {fileID: 665635450}
-  countdownSFXName: "\uCE74\uC6B4\uD2B8\uB2E4\uC6B4"
   scoreText: {fileID: 1307249524}
   finalScoreText: {fileID: 1907902479}
   gameOverPanel: {fileID: 903109480}
@@ -3876,6 +3876,9 @@ MonoBehaviour:
   diceRoller: {fileID: 182315805}
   nicknameInputField: {fileID: 1011480925}
   timeWarningSFXName: "\uC2DC\uAC04 \uC784\uBC15"
+  countdownSFXName: "\uCE74\uC6B4\uD2B8\uB2E4\uC6B4"
+  timeOver1SFXName: "\uD0C0\uC784 \uC624\uBC84"
+  timeOver2SFXName: "\uD0C0\uC784 \uC624\uBC84(\uC810\uC218 \uBBF8\uB2EC)"
 --- !u!4 &1080342752
 Transform:
   m_ObjectHideFlags: 0

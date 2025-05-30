@@ -84,6 +84,9 @@ public class GameManager : MonoBehaviour
 
     }
 
+
+
+
     // 게임 초기화
     public void InitializeGame()
     {
@@ -435,11 +438,15 @@ public class GameManager : MonoBehaviour
 
 private IEnumerator StartCountdown()
 {
+    
+     Debug.Log("StartCountdown 코루틴 시작됨");    
+
     if (countdownPanel != null) countdownPanel.SetActive(true);
 
     int count = 3;
     while (count > 0)
     {
+        Debug.Log($"카운트다운: {count}");
         if (countdownText != null)
             countdownText.text = count.ToString();
 
@@ -448,6 +455,8 @@ private IEnumerator StartCountdown()
         yield return new WaitForSeconds(1f);
         count--;
     }
+
+    Debug.Log("카운트다운 완료됨");
 
     if (countdownText != null)
         countdownText.text = "시작!";

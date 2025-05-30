@@ -134,7 +134,7 @@ public class AudioManager : MonoBehaviour
         if (isFeverTime) return; // 이미 피버타임 중이면 무시
         isFeverTime = true;
 
-        PlayMusic("피버타임 BGM");  // 피버타임 BGM 이름에 맞게 바꿔주세요
+        PlayMusic("피버타임 BGM"); 
     }
 
     // 피버타임 종료 시 호출

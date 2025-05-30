@@ -34,6 +34,9 @@ public class PlayerController : MonoBehaviour
     private const string is_walking = "isWalking";
     private const string is_ingredient = "isIngredient";
 
+    public GameObject countdownPanel; // 카운트다운 UI 패널
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -81,6 +84,14 @@ public class PlayerController : MonoBehaviour
         UpdateAnimation(moveX, moveY);
 
         rb.velocity = movement;
+
+            // 카운트다운 패널이 활성화되어 있으면 아무것도 하지 않음
+        if (countdownPanel != null && countdownPanel.activeSelf)
+        {
+            rb.velocity = Vector2.zero;
+            animator.SetBool(is_walking, false);
+            return;
+        }
 
         if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.Space))
         {

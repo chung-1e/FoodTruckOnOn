@@ -10,10 +10,12 @@ public class UIManager : MonoBehaviour
     [SerializeField] private Button startButton;
     [SerializeField] private Button ExitButton;
     [SerializeField] private Button SettingButton;
+    [SerializeField] private Button HomeButton;
 
     [Header("씬 이름")]
     [SerializeField] private string gameSceneName = "MapScene";
     [SerializeField] private string test1 = "Exit";
+    [SerializeField] private string test2 = "MainScene";
    
     
     [Header("랭킹 UI")]
@@ -40,6 +42,13 @@ public void Exit()
 {
     AudioManager.Instance.PlaySFX("마우스 클릭");  
     SceneManager.LoadScene(test1);
+
+}
+
+public void Home()
+{
+    AudioManager.Instance.PlaySFX("마우스 클릭"); 
+    SceneManager.LoadScene(test2);
 }
 
 public void OpenRankingPopup()
