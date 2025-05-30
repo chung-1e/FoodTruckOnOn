@@ -243,6 +243,10 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: a167b0618d7b6654b849edb188cb5e1f, type: 3}
   - name: "\uCE74\uC6B4\uD2B8\uB2E4\uC6B4"
     clip: {fileID: 8300000, guid: b9bd494f1c035eb46a8fc2f869c75cb0, type: 3}
+  - name: "\uD0C0\uC784 \uC624\uBC84"
+    clip: {fileID: 8300000, guid: 127bbc4470cb88f4885e40f792b1dc9d, type: 3}
+  - name: "\uD0C0\uC784 \uC624\uBC84(\uC810\uC218 \uBBF8\uB2EC)"
+    clip: {fileID: 8300000, guid: 818fa73a8838d674c816c690d8bef432, type: 3}
   musicSource: {fileID: 1163162940}
   sfxSource: {fileID: 251975296}
   audioMixer: {fileID: 24100000, guid: d342b306c7a25424caaf3cd410297696, type: 2}

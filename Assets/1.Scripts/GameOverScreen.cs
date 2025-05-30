@@ -7,7 +7,7 @@ public class GameOverScreen : MonoBehaviour
 
     public void RestartButton()
     {
-        SceneManager.LoadScene("IngameSceme"); 
+        SceneManager.LoadScene("IngameScene"); 
          AudioManager.Instance.PlaySFX("마우스 클릭"); 
     }
 

@@ -316,7 +316,7 @@ MonoBehaviour:
   rightButton: {fileID: 1756062175}
   startButton: {fileID: 705702500}
   mapUnlocked: 010000
-  ingameSceneName: InGameSceme
+  ingameSceneName: InGameScene
   transitionDuration: 0.5
   clickScaleDuration: 0.2
   clickScaleAmount: 1.1

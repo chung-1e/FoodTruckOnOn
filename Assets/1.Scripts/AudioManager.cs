@@ -45,7 +45,7 @@ public class AudioManager : MonoBehaviour
         PlaySceneMusic(scene.name);
     }
 
-    private void PlaySceneMusic(string sceneName)
+    public void PlaySceneMusic(string sceneName)
 {
     string musicToPlay = "";
 
@@ -54,7 +54,7 @@ public class AudioManager : MonoBehaviour
     {
         musicToPlay = "메인화면2";
     }
-    else if (sceneName == "IngameSceme")
+    else if (sceneName == "IngameScene")
     {
         musicToPlay = "게임 BGM";
     }
@@ -94,7 +94,7 @@ public class AudioManager : MonoBehaviour
         musicSource.loop = true;
         musicSource.Play();
     }
-
+    
     public void StopMusic()
     {
         musicSource.Stop();
@@ -112,6 +112,20 @@ public class AudioManager : MonoBehaviour
 
         sfxSource.PlayOneShot(s.clip);
     }
+    public void PlaySFXOver(string name)
+    {
+        Sound a = Array.Find(sfxSounds, y => y.name == name);
+
+        if (a == null)
+        {
+            Debug.Log("소리를 찾을 수 없음 : " + name);
+            return;
+        }
+        sfxSource.clip = a.clip;
+
+        sfxSource.Play();
+    }
+
      private bool isFeverTime = false;
 
     // 피버타임 시작 시 호출
@@ -134,13 +148,10 @@ public class AudioManager : MonoBehaviour
         PlaySceneMusic(currentScene);
     }
 
-    
 
 
       public void SetMasterVolume(float value)
     {
         audioMixer.SetFloat("MasterVolume", Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20f);
     }
-
-    
 }

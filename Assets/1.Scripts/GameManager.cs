@@ -13,11 +13,11 @@ public class GameManager : MonoBehaviour
     private float timeRemaining;        // 남은 시간
     private float playTime = 0f;        //플레이 시간
     private bool isGameActive = false;  // 게임 활성화 상태
+    private float soundPlayTime = 5f; // 사운드 재생 시간
 
     [Header("카운트다운")]
     public GameObject countdownPanel;     // 카운트다운 보여줄 패널
     public TMP_Text countdownText;        // 숫자 텍스트 
-    public string countdownSFXName = "카운트다운";
 
     [Header("스코어 설정")]
     public Text scoreText;   // 스코어 텍스트
@@ -48,10 +48,15 @@ public class GameManager : MonoBehaviour
     [Header("닉네임 저장")]
     public TMP_InputField nicknameInputField;
 
-    [Header("시간 경고 사운드")]
-    public string timeWarningSFXName = "시간 임박";  
+    [Header("사운드")]
+    public string timeWarningSFXName = "시간 임박";
+    public string countdownSFXName = "카운트다운";
+    public string timeOver1SFXName = "타임 오버";
+    public string timeOver2SFXName = "타임 오버(점수 미달)";
 
-    private bool isTimeWarningPlayed = false; 
+    private bool isTimeWarningPlayed = false;
+    private bool isTimeOver1Played = false;
+    private bool isTimeOver2Played = false;
 
      private Coroutine countdownCoroutine;
     void Start()
@@ -116,8 +121,11 @@ public class GameManager : MonoBehaviour
 
         // 시간 정상화
         Time.timeScale = 1f;
+        soundPlayTime = 5f;
 
          isTimeWarningPlayed = false; // 초기화 시점에 false로
+        isTimeOver1Played = false;
+        isTimeOver2Played = false;
     }
 
     // 타이머 업데이트
@@ -139,7 +147,7 @@ public class GameManager : MonoBehaviour
         {
             if (!isTimeWarningPlayed)
             {
-                AudioManager.Instance.PlaySFX(timeWarningSFXName);
+                AudioManager.Instance.PlaySFXOver(timeWarningSFXName);
                 isTimeWarningPlayed = true;
             }
         }
@@ -290,6 +298,45 @@ public class GameManager : MonoBehaviour
 
             if (finalScoreText != null)
                 finalScoreText.text = "최종점수: " + currentScore.ToString();
+        }
+
+        soundPlayTime -= Time.deltaTime;
+        // TimeOver 사운드 재생
+        if (currentScore > 400)
+        {
+            if (soundPlayTime != 0)
+            {
+                if (!isTimeOver1Played)
+                {
+                    AudioManager.Instance.PlaySFXOver(timeOver1SFXName);
+                    isTimeOver1Played = true;
+                    isTimeWarningPlayed = false;
+                    AudioManager.Instance.PlaySceneMusic("");
+                }
+            }
+            else
+            {
+                isTimeOver1Played = false;
+                AudioManager.Instance.PlaySceneMusic("IngameScene");
+            }
+        }
+        else
+        {
+            if (soundPlayTime != 0)
+            {
+                if (!isTimeOver2Played)
+                {
+                    AudioManager.Instance.PlaySFXOver(timeOver2SFXName);
+                    isTimeOver2Played = true;
+                    isTimeWarningPlayed = false;
+                    AudioManager.Instance.PlaySceneMusic("");
+                }
+            }
+            else
+            {
+                isTimeOver1Played = false;
+                AudioManager.Instance.PlaySceneMusic("IngameScene");
+            }
         }
     }
     
