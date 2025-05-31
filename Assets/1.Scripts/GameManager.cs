@@ -444,13 +444,12 @@ private IEnumerator StartCountdown()
     if (countdownPanel != null) countdownPanel.SetActive(true);
 
     int count = 3;
-    while (count > 0)
+     AudioManager.Instance.PlaySFX(countdownSFXName);
+     while (count > 0)
     {
         Debug.Log($"카운트다운: {count}");
         if (countdownText != null)
             countdownText.text = count.ToString();
-
-        AudioManager.Instance.PlaySFX(countdownSFXName);
 
         yield return new WaitForSeconds(1f);
         count--;
