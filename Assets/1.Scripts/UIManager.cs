@@ -14,7 +14,6 @@ public class UIManager : MonoBehaviour
 
     [Header("씬 이름")]
     [SerializeField] private string gameSceneName = "MapScene";
-    [SerializeField] private string test1 = "Exit";
     [SerializeField] private string test2 = "MainScene";
    
     
@@ -40,9 +39,8 @@ public class UIManager : MonoBehaviour
 
 public void Exit()
 {
-    AudioManager.Instance.PlaySFX("마우스 클릭");  
-    SceneManager.LoadScene(test1);
-
+    AudioManager.Instance.PlaySFX("마우스 클릭");
+        ExitGame();
 }
 
 public void Home()
@@ -79,6 +77,13 @@ public void CloseSettingPopup()
         settingPopup.SetActive(false);
 }
 
-
+    public void ExitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 
 }

@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
 
     [Header("UI 패널")]
     public GameObject gameOverPanel;    // 게임 종료 UI
+    public GameObject Player;                      // 게임 종료 시 Player 비활성화를 위해 만들어 둠.
     public Button rankingSubmitButton; // 랭킹 등록 버튼
     private bool isRankingSubmitted = false;  //랭킹 등록 여부
     
@@ -298,6 +299,7 @@ public class GameManager : MonoBehaviour
         if (gameOverPanel != null)
         {
             gameOverPanel.SetActive(true);
+            Player.SetActive(false);
 
             if (finalScoreText != null)
                 finalScoreText.text = "최종점수: " + currentScore.ToString();

@@ -491,8 +491,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 214, y: -46}
-  m_SizeDelta: {x: 779.5079, y: 664.8414}
+  m_AnchoredPosition: {x: 229.47964, y: -44.7101}
+  m_SizeDelta: {x: 748.5486, y: 667.4213}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &267517726
 MonoBehaviour:
@@ -759,7 +759,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC7A5\uC0AC\uC2DC\uC791"
+  m_text: "\uC7A5\uC0AC \uC2DC\uC791"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 7ee8966cac90a6543b86666bb3fc3516, type: 2}
   m_sharedMaterial: {fileID: 43227885846879644, guid: 7ee8966cac90a6543b86666bb3fc3516, type: 2}
@@ -822,7 +822,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0, w: 19.44735}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1007,7 +1007,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -443}
+  m_AnchoredPosition: {x: 0, y: -389}
   m_SizeDelta: {x: 400, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &705702500
@@ -1130,7 +1130,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 534, y: 214}
-  m_SizeDelta: {x: 120, y: 120}
+  m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &752385629
 MonoBehaviour:
@@ -1984,7 +1984,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1534029177
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2022,7 +2022,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contentParent: {fileID: 301960095}
-  rankItemPrefab: {fileID: 830532928455639310, guid: d5e50384a2b533d49963e409a581b1d8, type: 3}
+  rankItemPrefab: {fileID: 3446292591543745646, guid: ead3f829d6fb5704f8583a11e981e08f, type: 3}
 --- !u!1 &1671123580
 GameObject:
   m_ObjectHideFlags: 0
@@ -2059,7 +2059,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0.000011444}
+  m_AnchoredPosition: {x: 0, y: 67}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1690455861
@@ -2305,7 +2305,6 @@ MonoBehaviour:
   SettingButton: {fileID: 0}
   HomeButton: {fileID: 1710846043}
   gameSceneName: MapScene
-  test1: Exit
   test2: MainScene
   rankingPopup: {fileID: 1534029176}
   settingPopup: {fileID: 0}

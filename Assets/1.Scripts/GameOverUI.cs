@@ -19,7 +19,7 @@ public class GameOverUI : MonoBehaviour
         return;
     }
 
-    scoreText.text = "최종 점수: " + ScoreManager.Instance.currentScore;
+    scoreText.text = "최종점수 : " + ScoreManager.Instance.currentScore;
 }
 
 
