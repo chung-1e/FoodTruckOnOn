@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+  
+
     [Header("타이머 설정")]
     public Slider timerSlider;          // 타이머 슬라이더
     public float gameTime = 120f;       // 게임 시간 (2분 = 120초)
@@ -55,6 +57,8 @@ public class GameManager : MonoBehaviour
     public string timeOver1SFXName = "타임 오버";
     public string timeOver2SFXName = "타임 오버(점수 미달)";
 
+ 
+ 
     private bool isTimeWarningPlayed = false;
     private bool isTimeOver1Played = false;
     private bool isTimeOver2Played = false;
@@ -472,6 +476,8 @@ private IEnumerator StartCountdown()
     //  카운트다운 끝난 후 주사위 굴림 실행
     if (diceRoller != null)
         diceRoller.Rolling();
+
+    
 }
 
 }

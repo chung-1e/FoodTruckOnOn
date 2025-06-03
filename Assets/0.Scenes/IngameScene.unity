@@ -937,6 +937,8 @@ MonoBehaviour:
   - {fileID: 335670667, guid: a28c7206c6f2e824d9b6c78e150548eb, type: 3}
   rollingDuration: 0.5
   swapInterval: 0.08
+  rollClip: {fileID: 8300000, guid: 208fdb10a0adb8f448626bc849376954, type: 3}
+  rollAudioSource: {fileID: 0}
   recipeManager: {fileID: 1806285201}
   dicePos: {x: -804.9657, y: 442}
   shrinkDuration: 1

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class RollDice : MonoBehaviour
 {
     [Header("주사위 이미지 설정")]
@@ -13,6 +14,11 @@ public class RollDice : MonoBehaviour
     [Header("롤링 설정")]
     public float rollingDuration = 0.5f;  // 굴러가는 시간
     public float swapInterval = 0.05f;  // 이미지 스왑 간격
+
+    [Header("사운드 설정")]
+    public AudioClip rollClip;           // 주사위 효과음
+    public AudioSource rollAudioSource;  // 주사위 전용 오디오 소스
+
 
     [Header("레시피 시스템")]
     public RecipeManager recipeManager;  // 레시피 매니저 참조
@@ -36,7 +42,17 @@ public class RollDice : MonoBehaviour
 
     void Start()
     {
-        // 컴포넌트 참조
+        
+    
+       
+    if (rollAudioSource == null)
+    {
+        rollAudioSource = gameObject.AddComponent<AudioSource>();
+        rollAudioSource.playOnAwake = false;
+    }
+    
+    
+            // 컴포넌트 참조
         diceRectTransform = diceImage.GetComponent<RectTransform>();
 
         // 시작 시 주사위 초기화 - (0,0) 위치에 큰 크기로 배치
@@ -108,6 +124,15 @@ public class RollDice : MonoBehaviour
             // 랜덤하게 주사위 이미지 변경
             int randomIndex = Random.Range(0, diceSprites.Length);
             diceImage.sprite = diceSprites[randomIndex];
+            
+   if (!rollAudioSource.isPlaying && rollClip != null)
+{
+    rollAudioSource.clip = rollClip;
+    rollAudioSource.Play();
+}
+
+  
+       
             elapsedTime += swapInterval;
 
             // 실제 시간 사용 (Time.timeScale = 0이어도 작동)
