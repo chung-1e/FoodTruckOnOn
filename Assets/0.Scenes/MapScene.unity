@@ -492,8 +492,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 215.45728, y: -132.80066}
-  m_SizeDelta: {x: 735.947, y: 479.9023}
+  m_AnchoredPosition: {x: 214, y: -126}
+  m_SizeDelta: {x: 738.8615, y: 493.5036}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &267517726
 MonoBehaviour:
@@ -620,7 +620,7 @@ MonoBehaviour:
     m_Bottom: 350
   m_ChildAlignment: 1
   m_Spacing: 30
-  m_ChildForceExpandWidth: 0
+  m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
@@ -1740,7 +1740,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -17.579, y: 0}
+  m_SizeDelta: {x: -18.0415, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1288963445
 MonoBehaviour:
@@ -2039,7 +2039,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contentParent: {fileID: 301960095}
   rankItemPrefab: {fileID: 3446292591543745646, guid: ead3f829d6fb5704f8583a11e981e08f, type: 3}
-  scrollRect: {fileID: 267517726}
 --- !u!1 &1541499274
 GameObject:
   m_ObjectHideFlags: 0
@@ -2679,7 +2678,7 @@ RectTransform:
   m_Father: {fileID: 1541499275}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.16538727}
+  m_AnchorMin: {x: 0, y: 0.14173287}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -2759,8 +2758,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 385.17282, y: 85.21872}
-  m_SizeDelta: {x: 20.579, y: 663.9539}
+  m_AnchoredPosition: {x: 382.4625, y: 81.201}
+  m_SizeDelta: {x: 21.0415, y: 655.91}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2142819423
 MonoBehaviour:
@@ -2805,8 +2804,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2130353653}
   m_HandleRect: {fileID: 2130353652}
   m_Direction: 2
-  m_Value: 1.0000045
-  m_Size: 0.8346127
+  m_Value: 1.0000052
+  m_Size: 0.8582671
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
